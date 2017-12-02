@@ -23,11 +23,31 @@ paths:
         required: true
         type: "string"
       - in: "body"
-        name: "body"
+        name: "converse"
         description: "Conversation object"
-        required: true
         schema:
-          $ref: "#/definitions/Conversation"
+          type: object
+          required:
+            - message
+          properties:
+            message:
+              type: "object"
+              properties:
+                content:
+                  type: "string"
+                  description: "Content to send for the bot"
+                  example: "halo"
+                type:
+                  type: "string"
+                  description: "Type of content that can be text or button"
+                  example: "text"
+                  enum:
+                    - text
+                    - button
+            sessionId:
+              type: "string"
+            dataKey:
+              type: "string"
       responses:
         200:
           description: "successful operation"
@@ -41,29 +61,3 @@ securityDefinitions:
     type: "apiKey"
     name: "Authorization"
     in: "header"
-definitions:
-  Conversation:
-    type: "object"
-    properties:
-      message:
-        type: "object"
-        properties:
-          content:
-            type: "string"
-            description: "Content to send for the bot"
-            example: "halo"
-          type:
-            type: "string"
-            description: "Type of content that can be text or button"
-            example: "text"
-            enum:
-              - text
-              - button
-      sessionId:
-        type: "string"
-      dataKey:
-        type: "string"
-    example:
-      dataKey: "dataKey"
-      sessionId: "sessionId"
-      message: "{}"
