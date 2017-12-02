@@ -48,7 +48,14 @@ definitions:
         type: "string"
       message:
         type: "object"
-        properties: {}
+        properties:
+          content:
+            type: "string"
+          type:
+            type: "string"
+            enum:
+              - text
+              - button
       dataKey:
         type: "string"
     example:
