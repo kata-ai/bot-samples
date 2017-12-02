@@ -5,40 +5,11 @@ info:
   title: "Zaun"
 host: "virtserver.swaggerhub.com"
 basePath: "/kata.ai/zaun/1.0.0"
-tags:
-- name: "auth"
-  description: "Authentication Management API"
-- name: "bot"
-  description: "Bot Management API"
-- name: "draft"
-  description: "Bot Draft Management API"
-- name: "deployment"
-  description: "Deployment Management API"
-- name: "session"
-  description: "Session Management API"
-- name: "channel"
-  description: "Channel Management API"
-- name: "user"
-  description: "User Management API"
-- name: "team"
-  description: "Team Management API"
-- name: "analytic"
-  description: "Analytik API"
-- name: "cache"
-  description: "Diaenne's Caches API"
-- name: "schedule"
-  description: "Scheduler's API"
-- name: "util"
-  description: "Util's API"
-- name: "nlu"
-  description: "Nlu's API"
 schemes:
 - "https"
 paths:
   /caches:
     delete:
-      tags:
-      - "cache"
       summary: "Clear diaenne's caches"
       consumes:
       - "application/json"
@@ -52,8 +23,6 @@ paths:
       - Bearer: []
   /timestamp:
     get:
-      tags:
-      - "util"
       summary: "Get current timestamp"
       consumes:
       - "application/json"
@@ -69,8 +38,6 @@ paths:
       - Bearer: []
   /tokens:
     post:
-      tags:
-      - "auth"
       summary: "Create token"
       consumes:
       - "application/json"
@@ -92,8 +59,6 @@ paths:
       - Bearer: []
   /tokens/{tokenId}:
     get:
-      tags:
-      - "auth"
       summary: "Read token by ID"
       consumes:
       - "application/json"
@@ -114,8 +79,6 @@ paths:
       - Bearer: []
   /login:
     post:
-      tags:
-      - "auth"
       summary: "Login"
       consumes:
       - "application/json"
@@ -135,8 +98,6 @@ paths:
             $ref: "#/definitions/Token"
   /analytics/{botId}/{deploymentId}/{object}:
     get:
-      tags:
-      - "analytic"
       summary: "Get analytic data"
       consumes:
       - "application/json"
@@ -180,8 +141,6 @@ paths:
       - Bearer: []
   /bots:
     get:
-      tags:
-      - "bot"
       summary: "Get all bots"
       consumes:
       - "application/json"
@@ -206,8 +165,6 @@ paths:
       security:
       - Bearer: []
     post:
-      tags:
-      - "bot"
       summary: "Create bot"
       consumes:
       - "application/json"
@@ -229,8 +186,6 @@ paths:
       - Bearer: []
   /bots/{botId}:
     get:
-      tags:
-      - "bot"
       summary: "Find bot by ID"
       consumes:
       - "application/json"
@@ -250,8 +205,6 @@ paths:
       security:
       - Bearer: []
     put:
-      tags:
-      - "bot"
       summary: "Update bot by ID"
       consumes:
       - "application/json"
@@ -286,8 +239,6 @@ paths:
       security:
       - Bearer: []
     delete:
-      tags:
-      - "bot"
       summary: "Delete bot by ID"
       consumes:
       - "application/json"
@@ -308,8 +259,6 @@ paths:
       - Bearer: []
   /bots/{botId}/versions:
     get:
-      tags:
-      - "bot"
       summary: "Get bot versions"
       consumes:
       - "application/json"
@@ -330,8 +279,6 @@ paths:
       - Bearer: []
   /bots/{botId}/converse:
     post:
-      tags:
-      - "bot"
       summary: "Converse"
       consumes:
       - "application/json"
@@ -359,8 +306,6 @@ paths:
       - Bearer: []
   /bots/{botId}/exec/{object}:
     post:
-      tags:
-      - "bot"
       summary: "Execute intent, state mapper, action, or"
       consumes:
       - "application/json"
@@ -398,8 +343,6 @@ paths:
       - Bearer: []
   /bots/{botId}/draft:
     get:
-      tags:
-      - "draft"
       summary: "Get bot draft"
       consumes:
       - "application/json"
@@ -419,8 +362,6 @@ paths:
       security:
       - Bearer: []
     post:
-      tags:
-      - "draft"
       summary: "Create bot draft"
       consumes:
       - "application/json"
@@ -446,8 +387,6 @@ paths:
       security:
       - Bearer: []
     put:
-      tags:
-      - "draft"
       summary: "Update bot draft"
       consumes:
       - "application/json"
@@ -473,8 +412,6 @@ paths:
       security:
       - Bearer: []
     delete:
-      tags:
-      - "draft"
       summary: "Delete bot draft"
       consumes:
       - "application/json"
@@ -495,8 +432,6 @@ paths:
       - Bearer: []
   /bots/{botId}/deployments:
     get:
-      tags:
-      - "deployment"
       summary: "Get all bot deployments"
       consumes:
       - "application/json"
@@ -526,8 +461,6 @@ paths:
       security:
       - Bearer: []
     post:
-      tags:
-      - "deployment"
       summary: "Create bot deployment"
       consumes:
       - "application/json"
@@ -554,8 +487,6 @@ paths:
       - Bearer: []
   /bots/{botId}/deployments/{deploymentId}:
     get:
-      tags:
-      - "deployment"
       summary: "Find deployment by ID"
       consumes:
       - "application/json"
@@ -580,8 +511,6 @@ paths:
       security:
       - Bearer: []
     put:
-      tags:
-      - "deployment"
       summary: "Update deployment by ID"
       consumes:
       - "application/json"
@@ -613,8 +542,6 @@ paths:
       security:
       - Bearer: []
     delete:
-      tags:
-      - "deployment"
       summary: "Delete deployment by ID"
       consumes:
       - "application/json"
@@ -640,8 +567,6 @@ paths:
       - Bearer: []
   /bots/{botId}/deployments/{deploymentId}/sessions:
     post:
-      tags:
-      - "session"
       summary: "Create session for bot deployment"
       consumes:
       - "application/json"
@@ -673,8 +598,6 @@ paths:
       - Bearer: []
   /bots/{botId}/deployments/{deploymentId}/sessions/{sessionId}:
     get:
-      tags:
-      - "session"
       summary: "Find session by ID"
       consumes:
       - "application/json"
@@ -709,8 +632,6 @@ paths:
       security:
       - Bearer: []
     put:
-      tags:
-      - "session"
       summary: "Update session by ID"
       consumes:
       - "application/json"
@@ -747,8 +668,6 @@ paths:
       security:
       - Bearer: []
     delete:
-      tags:
-      - "session"
       summary: "Delete session by ID"
       consumes:
       - "application/json"
@@ -779,8 +698,6 @@ paths:
       - Bearer: []
   /bots/{botId}/deployments/{deploymentId}/channels:
     get:
-      tags:
-      - "channel"
       summary: "Get all channels"
       consumes:
       - "application/json"
@@ -815,8 +732,6 @@ paths:
       security:
       - Bearer: []
     post:
-      tags:
-      - "channel"
       summary: "Create a channel"
       consumes:
       - "application/json"
@@ -848,8 +763,6 @@ paths:
       - Bearer: []
   /bots/{botId}/deployments/{deploymentId}/channels/{channelId}:
     get:
-      tags:
-      - "channel"
       summary: "Find channel by ID"
       consumes:
       - "application/json"
@@ -879,8 +792,6 @@ paths:
       security:
       - Bearer: []
     put:
-      tags:
-      - "channel"
       summary: "Update channel by ID"
       consumes:
       - "application/json"
@@ -916,8 +827,6 @@ paths:
       security:
       - Bearer: []
     delete:
-      tags:
-      - "channel"
       summary: "Delete channel by ID"
       consumes:
       - "application/json"
@@ -948,8 +857,6 @@ paths:
       - Bearer: []
   /bots/{botId}/deployments/{deploymentId}/schedules:
     get:
-      tags:
-      - "schedule"
       summary: "Get all schedules"
       consumes:
       - "application/json"
@@ -984,8 +891,6 @@ paths:
       security:
       - Bearer: []
     post:
-      tags:
-      - "schedule"
       summary: "Create a schedule"
       consumes:
       - "application/json"
@@ -1017,8 +922,6 @@ paths:
       - Bearer: []
   /bots/{botId}/deployments/{deploymentId}/schedules/{scheduleId}:
     get:
-      tags:
-      - "schedule"
       summary: "Find schedule by ID"
       consumes:
       - "application/json"
@@ -1048,8 +951,6 @@ paths:
       security:
       - Bearer: []
     delete:
-      tags:
-      - "schedule"
       summary: "Delete schedule by ID"
       consumes:
       - "application/json"
@@ -1080,8 +981,6 @@ paths:
       - Bearer: []
   /users:
     get:
-      tags:
-      - "user"
       summary: "Get all users"
       consumes:
       - "application/json"
@@ -1106,8 +1005,6 @@ paths:
       security:
       - Bearer: []
     post:
-      tags:
-      - "user"
       summary: "Create a user"
       consumes:
       - "application/json"
@@ -1130,8 +1027,6 @@ paths:
       - Bearer: []
   /users/{userId}:
     get:
-      tags:
-      - "user"
       summary: "Find user by ID"
       consumes:
       - "application/json"
@@ -1152,8 +1047,6 @@ paths:
       security:
       - Bearer: []
     put:
-      tags:
-      - "user"
       summary: "Update user by ID"
       consumes:
       - "application/json"
@@ -1180,8 +1073,6 @@ paths:
       security:
       - Bearer: []
     delete:
-      tags:
-      - "user"
       summary: "Delete user by ID"
       consumes:
       - "application/json"
@@ -1202,8 +1093,6 @@ paths:
       - Bearer: []
   /users/{userId}/teams:
     get:
-      tags:
-      - "user"
       summary: "Find user's teams"
       consumes:
       - "application/json"
@@ -1226,8 +1115,6 @@ paths:
       - Bearer: []
   /users/{userId}/tokens:
     get:
-      tags:
-      - "user"
       summary: "Find user's tokens"
       consumes:
       - "application/json"
@@ -1250,8 +1137,6 @@ paths:
       - Bearer: []
   /teams:
     post:
-      tags:
-      - "team"
       summary: "Create a team"
       consumes:
       - "application/json"
@@ -1273,8 +1158,6 @@ paths:
       - Bearer: []
   /teams/{teamId}/users:
     get:
-      tags:
-      - "team"
       summary: "Find users in a team"
       consumes:
       - "application/json"
@@ -1295,8 +1178,6 @@ paths:
       - Bearer: []
   /teams/{teamId}/users/{userId}:
     post:
-      tags:
-      - "team"
       summary: "Add user to team"
       consumes:
       - "application/json"
@@ -1327,8 +1208,6 @@ paths:
       security:
       - Bearer: []
     delete:
-      tags:
-      - "team"
       summary: "Delete user from team"
       consumes:
       - "application/json"
@@ -1354,8 +1233,6 @@ paths:
       - Bearer: []
   /nlus:
     get:
-      tags:
-      - "nlu"
       summary: "Get all nlus"
       consumes:
       - "application/json"
@@ -1380,8 +1257,6 @@ paths:
       security:
       - Bearer: []
     post:
-      tags:
-      - "nlu"
       summary: "Create nlu"
       consumes:
       - "application/json"
@@ -1403,8 +1278,6 @@ paths:
       - Bearer: []
   /nlus/{nluName}:
     get:
-      tags:
-      - "nlu"
       summary: "Find NLU by name"
       consumes:
       - "application/json"
@@ -1424,8 +1297,6 @@ paths:
       security:
       - Bearer: []
     put:
-      tags:
-      - "nlu"
       summary: "Update nlu by name"
       consumes:
       - "application/json"
@@ -1451,8 +1322,6 @@ paths:
       security:
       - Bearer: []
     delete:
-      tags:
-      - "nlu"
       summary: "Delete Nlu by Name"
       consumes:
       - "application/json"
@@ -1473,8 +1342,6 @@ paths:
       - Bearer: []
   /nlus/{nluName}/snapshot:
     get:
-      tags:
-      - "nlu"
       summary: "Snapshot NLU"
       produces:
       - "application/json"
@@ -1493,8 +1360,6 @@ paths:
       - Bearer: []
   /nlus/profiles:
     get:
-      tags:
-      - "nlu"
       summary: "Get list profile NLU"
       produces:
       - "application/json"
@@ -1509,8 +1374,6 @@ paths:
       - Bearer: []
   /nlus/public:
     get:
-      tags:
-      - "nlu"
       summary: "Get list public NLU"
       produces:
       - "application/json"
@@ -1526,8 +1389,6 @@ paths:
       - Bearer: []
   /nlus/{nluName}/train:
     post:
-      tags:
-      - "nlu"
       summary: "Train NLU"
       consumes:
       - "multipart/form-data"
@@ -1560,8 +1421,6 @@ paths:
       - Bearer: []
   /nlus/{nluName}/training_data:
     get:
-      tags:
-      - "analytic"
       summary: "Get analytic data"
       consumes:
       - "application/json"
@@ -1591,8 +1450,6 @@ paths:
       - Bearer: []
   /nlus/{nluName}/predict:
     post:
-      tags:
-      - "nlu"
       summary: "Train NLU"
       consumes:
       - "multipart/form-data"
@@ -1625,8 +1482,6 @@ paths:
       - Bearer: []
   /nlus/{nluName}/debug:
     post:
-      tags:
-      - "nlu"
       summary: "Train NLU"
       consumes:
       - "multipart/form-data"
@@ -1654,8 +1509,6 @@ paths:
       - Bearer: []
   /nlus/{nluName}/entities:
     get:
-      tags:
-      - "nlu"
       summary: "Get list Entity of nlu"
       consumes:
       - "application/json"
@@ -1676,8 +1529,6 @@ paths:
       security:
       - Bearer: []
     post:
-      tags:
-      - "nlu"
       summary: "Create entity"
       consumes:
       - "application/json"
@@ -1704,8 +1555,6 @@ paths:
       - Bearer: []
   /nlus/{nluName}/entities/{entityName}:
     get:
-      tags:
-      - "nlu"
       summary: "Get Entity of nlu"
       consumes:
       - "application/json"
@@ -1730,8 +1579,6 @@ paths:
       security:
       - Bearer: []
     put:
-      tags:
-      - "nlu"
       summary: "Update entity by name"
       consumes:
       - "application/json"
@@ -1762,8 +1609,6 @@ paths:
       security:
       - Bearer: []
     delete:
-      tags:
-      - "nlu"
       summary: "Delete entity by name"
       consumes:
       - "application/json"
