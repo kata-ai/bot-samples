@@ -1,2594 +1,2876 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
-  description: |
-    Zaun service
+  description: "Zaun service\n"
   version: "1.0.1"
-  title: Zaun
-
-# host: zaun.katalabs.io
-# basePath: /
-
-securityDefinitions:
-  Bearer:
-    type: apiKey
-    name: Authorization
-    in: header
-
+  title: "Zaun"
+host: "virtserver.swaggerhub.com"
+basePath: "/kata.ai/zaun/1.0.0"
 tags:
-- name: auth
-  description: Authentication Management API
-- name: bot
-  description: Bot Management API
-- name: draft
-  description: Bot Draft Management API
-- name: deployment
-  description: Deployment Management API
-- name: session
-  description: Session Management API
-- name: channel
-  description: Channel Management API
-- name: user
-  description: User Management API
-- name: team
-  description: Team Management API
-- name: analytic
-  description: Analytik API
-- name: cache
-  description: Diaenne's Caches API
-- name: schedule
-  description: Scheduler's API
-- name: util
-  description: Util's API
-- name: nlu
-  description: Nlu's API
-  
+- name: "auth"
+  description: "Authentication Management API"
+- name: "bot"
+  description: "Bot Management API"
+- name: "draft"
+  description: "Bot Draft Management API"
+- name: "deployment"
+  description: "Deployment Management API"
+- name: "session"
+  description: "Session Management API"
+- name: "channel"
+  description: "Channel Management API"
+- name: "user"
+  description: "User Management API"
+- name: "team"
+  description: "Team Management API"
+- name: "analytic"
+  description: "Analytik API"
+- name: "cache"
+  description: "Diaenne's Caches API"
+- name: "schedule"
+  description: "Scheduler's API"
+- name: "util"
+  description: "Util's API"
+- name: "nlu"
+  description: "Nlu's API"
+schemes:
+- "https"
 paths:
   /caches:
     delete:
-      security: 
-        - Bearer: []
-      tags: 
-      - cache
-      summary: Clear diaenne's caches
+      tags:
+      - "cache"
+      summary: "Clear diaenne's caches"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
+      parameters: []
       responses:
         200:
-          description: successful operation
-  
+          description: "successful operation"
+      security:
+      - Bearer: []
   /timestamp:
     get:
-      security:
-        - Bearer: []
       tags:
-      - util
-      summary: Get current timestamp
+      - "util"
+      summary: "Get current timestamp"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
+      parameters: []
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: string
-  
+            type: "string"
+      security:
+      - Bearer: []
   /tokens:
     post:
-      security: 
-        - Bearer: []
-      tags: 
-      - auth
-      summary: Create token
+      tags:
+      - "auth"
+      summary: "Create token"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: body
-        in: body
-        description: Token object
+      - in: "body"
+        name: "body"
+        description: "Token object"
         required: true
         schema:
-          $ref: '#/definitions/Token'
+          $ref: "#/definitions/Token"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/Token'
+            $ref: "#/definitions/Token"
+      security:
+      - Bearer: []
   /tokens/{tokenId}:
     get:
-      security: 
-        - Bearer: []
-      tags: 
-      - auth
-      summary: Read token by ID
+      tags:
+      - "auth"
+      summary: "Read token by ID"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: tokenId
-        in: path
-        description: Token ID
+      - name: "tokenId"
+        in: "path"
+        description: "Token ID"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/Token'
+            $ref: "#/definitions/Token"
+      security:
+      - Bearer: []
   /login:
     post:
-      tags: 
-      - auth
-      summary: Login
+      tags:
+      - "auth"
+      summary: "Login"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: body
-        in: body
-        description: Login
+      - in: "body"
+        name: "body"
+        description: "Login"
         required: true
         schema:
-          $ref: '#/definitions/Login'
+          $ref: "#/definitions/Login"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/Token'
+            $ref: "#/definitions/Token"
   /analytics/{botId}/{deploymentId}/{object}:
     get:
-      security: 
-        - Bearer: []
-      tags: 
-      - analytic
-      summary: Get analytic data
+      tags:
+      - "analytic"
+      summary: "Get analytic data"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: Bot ID
+      - name: "botId"
+        in: "path"
+        description: "Bot ID"
         required: true
-        type: string
-      - name: deploymentId
-        in: path
-        description: Deployment ID
+        type: "string"
+      - name: "deploymentId"
+        in: "path"
+        description: "Deployment ID"
         required: true
-        type: string
-      - name: object
-        in: path
-        description: Object
+        type: "string"
+      - name: "object"
+        in: "path"
+        description: "Object"
         required: true
-        type: string
-        enum: 
-          - flows
-          - intents
-          - messages
-      - name: args
-        in: query
-        description: Additional arguments such as channelId, startTimestamp, endTimestamp, etc
-        type: string
+        type: "string"
+        enum:
+        - "flows"
+        - "intents"
+        - "messages"
+      - name: "args"
+        in: "query"
+        description: "Additional arguments such as channelId, startTimestamp, endTimestamp,\
+          \ etc"
+        required: false
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: array
+            type: "array"
             items:
-              type: object
+              type: "object"
+              properties: {}
+      security:
+      - Bearer: []
   /bots:
-    post:
-      security: 
-        - Bearer: []
+    get:
       tags:
-      - bot
-      summary: Create bot
+      - "bot"
+      summary: "Get all bots"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: body
-        in: body
-        description: Bot
+      - name: "limit"
+        in: "query"
+        description: "Limit returned bots in a page"
+        required: false
+        type: "integer"
+      - name: "page"
+        in: "query"
+        description: "A number representing page"
+        required: false
+        type: "integer"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PagedBot"
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - "bot"
+      summary: "Create bot"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Bot"
         required: true
         schema:
-          $ref: '#/definitions/Bot'
+          $ref: "#/definitions/Bot"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/Bot'
-    get:
-      security: 
-        - Bearer: []
-      tags:
-      - bot
-      summary: Get all bots
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: limit
-        in: query
-        description: Limit returned bots in a page
-        type: integer
-      - name: page
-        in: query
-        description: A number representing page
-        type: integer
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/PagedBot' 
+            $ref: "#/definitions/Bot"
+      security:
+      - Bearer: []
   /bots/{botId}:
     get:
-      security: 
-        - Bearer: []
       tags:
-      - bot
-      summary: Find bot by ID
+      - "bot"
+      summary: "Find bot by ID"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot to return
+      - name: "botId"
+        in: "path"
+        description: "ID of bot to return"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/Bot'
+            $ref: "#/definitions/Bot"
+      security:
+      - Bearer: []
     put:
-      security: 
-        - Bearer: []
       tags:
-      - bot
-      summary: Update bot by ID
+      - "bot"
+      summary: "Update bot by ID"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot to update
+      - name: "botId"
+        in: "path"
+        description: "ID of bot to update"
         required: true
-        type: string
-      - name: increment
-        in: query
-        description: Increment version number
-        type: string
-        enum: 
-          - major
-          - minor
-          - patch
-      - name: body
-        in: body
-        description: Bot
+        type: "string"
+      - name: "increment"
+        in: "query"
+        description: "Increment version number"
+        required: false
+        type: "string"
+        enum:
+        - "major"
+        - "minor"
+        - "patch"
+      - in: "body"
+        name: "body"
+        description: "Bot"
         required: true
         schema:
-          $ref: '#/definitions/Bot'
+          $ref: "#/definitions/Bot"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/Bot'
+            $ref: "#/definitions/Bot"
+      security:
+      - Bearer: []
     delete:
-      security: 
-        - Bearer: []
       tags:
-      - bot
-      summary: Delete bot by ID
+      - "bot"
+      summary: "Delete bot by ID"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot to delete
+      - name: "botId"
+        in: "path"
+        description: "ID of bot to delete"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/Bot'
+            $ref: "#/definitions/Bot"
+      security:
+      - Bearer: []
   /bots/{botId}/versions:
     get:
-      security: 
-        - Bearer: []
       tags:
-      - bot
-      summary: Get bot versions
+      - "bot"
+      summary: "Get bot versions"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: object
-            properties:
-              versions:
-                type: array
-                items:
-                  type: string
-              latest:
-                type: string
+            $ref: "#/definitions/inline_response_200"
+      security:
+      - Bearer: []
   /bots/{botId}/converse:
     post:
-      security: 
-        - Bearer: []
       tags:
-      - bot
-      summary: Converse
+      - "bot"
+      summary: "Converse"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
         required: true
-        type: string
-      - in: body
-        name: body
-        description: Conversation object
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Conversation object"
         required: true
         schema:
-          $ref: '#/definitions/Conversation'
+          $ref: "#/definitions/Conversation"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: object
+            type: "object"
+            properties: {}
+      security:
+      - Bearer: []
   /bots/{botId}/exec/{object}:
     post:
-      security: 
-        - Bearer: []
       tags:
-      - bot
-      summary: Execute intent, state mapper, action, or
+      - "bot"
+      summary: "Execute intent, state mapper, action, or"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
         required: true
-        type: string
-      - name: object
-        in: path
-        description: Object
+        type: "string"
+      - name: "object"
+        in: "path"
+        description: "Object"
         required: true
-        type: string
-        enum: 
-          - intent
-          - state-mapper
-          - action
-          - flow
-      - in: body
-        name: body
-        description: Exec body
+        type: "string"
+        enum:
+        - "intent"
+        - "state-mapper"
+        - "action"
+        - "flow"
+      - in: "body"
+        name: "body"
+        description: "Exec body"
         required: true
         schema:
-          type: object
+          type: "object"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: object
+            type: "object"
+            properties: {}
+      security:
+      - Bearer: []
   /bots/{botId}/draft:
-    post:
-      security: 
-        - Bearer: []
-      tags:
-      - draft
-      summary: Create bot draft
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: botId
-        in: path
-        description: ID of bot to deploy
-        required: true
-        type: string
-      - name: body
-        in: body
-        required: true
-        description: Bot Draft object
-        schema:
-          $ref: '#/definitions/Bot'
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/Bot'
     get:
-      security: 
-        - Bearer: []
       tags:
-      - draft
-      summary: Get bot draft
+      - "draft"
+      summary: "Get bot draft"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot to deploy
+      - name: "botId"
+        in: "path"
+        description: "ID of bot to deploy"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/Bot'
+            $ref: "#/definitions/Bot"
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - "draft"
+      summary: "Create bot draft"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "botId"
+        in: "path"
+        description: "ID of bot to deploy"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Bot Draft object"
+        required: true
+        schema:
+          $ref: "#/definitions/Bot"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Bot"
+      security:
+      - Bearer: []
     put:
-      security: 
-        - Bearer: []
       tags:
-      - draft
-      summary: Update bot draft
+      - "draft"
+      summary: "Update bot draft"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
         required: true
-        type: string
-      - name: body
-        in: body
-        description: Bot Draft
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Bot Draft"
         required: true
         schema:
-          $ref: '#/definitions/Bot'
+          $ref: "#/definitions/Bot"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/Bot'
+            $ref: "#/definitions/Bot"
+      security:
+      - Bearer: []
     delete:
-      security: 
-        - Bearer: []
       tags:
-      - draft
-      summary: Delete bot draft
+      - "draft"
+      summary: "Delete bot draft"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/Bot'
-
+            $ref: "#/definitions/Bot"
+      security:
+      - Bearer: []
   /bots/{botId}/deployments:
-    post:
-      security: 
-        - Bearer: []
-      tags:
-      - deployment
-      summary: Create bot deployment
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: botId
-        in: path
-        description: ID of bot to deploy
-        required: true
-        type: string
-      - name: body
-        in: body
-        description: Deployment object
-        schema:
-          $ref: '#/definitions/Deployment'
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/Deployment'
     get:
-      security: 
-        - Bearer: []
       tags:
-      - deployment
-      summary: Get all bot deployments
+      - "deployment"
+      summary: "Get all bot deployments"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot to deploy
+      - name: "botId"
+        in: "path"
+        description: "ID of bot to deploy"
         required: true
-        type: string
-      - name: limit
-        in: query
-        description: Limit returned bots in a page
-        type: integer
-      - name: page
-        in: query
-        description: A number representing page
-        type: integer
+        type: "string"
+      - name: "limit"
+        in: "query"
+        description: "Limit returned bots in a page"
+        required: false
+        type: "integer"
+      - name: "page"
+        in: "query"
+        description: "A number representing page"
+        required: false
+        type: "integer"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: object
-            properties:
-              page:
-                type: integer
-              limit:
-                type: integer
-              count:
-                type: integer
-              total:
-                type: integer
-              items:
-                type: array
-                items:
-                  $ref: '#/definitions/Deployment'
+            $ref: "#/definitions/inline_response_200_1"
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - "deployment"
+      summary: "Create bot deployment"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "botId"
+        in: "path"
+        description: "ID of bot to deploy"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Deployment object"
+        required: false
+        schema:
+          $ref: "#/definitions/Deployment"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Deployment"
+      security:
+      - Bearer: []
   /bots/{botId}/deployments/{deploymentId}:
     get:
-      security: 
-        - Bearer: []
       tags:
-      - deployment
-      summary: Find deployment by ID
+      - "deployment"
+      summary: "Find deployment by ID"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
         required: true
-        type: string
-      - name: deploymentId
-        in: path
-        description: ID of deployment to return
+        type: "string"
+      - name: "deploymentId"
+        in: "path"
+        description: "ID of deployment to return"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/Deployment'
+            $ref: "#/definitions/Deployment"
+      security:
+      - Bearer: []
     put:
-      security: 
-        - Bearer: []
       tags:
-      - deployment
-      summary: Update deployment by ID
+      - "deployment"
+      summary: "Update deployment by ID"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
         required: true
-        type: string
-      - name: deploymentId
-        in: path
-        description: ID of deployment to update
+        type: "string"
+      - name: "deploymentId"
+        in: "path"
+        description: "ID of deployment to update"
         required: true
-        type: string
-      - name: body
-        in: body
-        description: Deployment
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Deployment"
         required: true
         schema:
-          $ref: '#/definitions/Deployment'
+          $ref: "#/definitions/Deployment"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: object
+            type: "object"
+            properties: {}
+      security:
+      - Bearer: []
     delete:
-      security: 
-        - Bearer: []
       tags:
-      - deployment
-      summary: Delete deployment by ID
+      - "deployment"
+      summary: "Delete deployment by ID"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
         required: true
-        type: string
-      - name: deploymentId
-        in: path
-        description: ID of deployment to delete
+        type: "string"
+      - name: "deploymentId"
+        in: "path"
+        description: "ID of deployment to delete"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/Deployment'
-
+            $ref: "#/definitions/Deployment"
+      security:
+      - Bearer: []
   /bots/{botId}/deployments/{deploymentId}/sessions:
     post:
-      security: 
-        - Bearer: []
       tags:
-      - session
-      summary: Create session for bot deployment
+      - "session"
+      summary: "Create session for bot deployment"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
         required: true
-        type: string
-      - name: deploymentId
-        in: path
-        description: ID of deployment
+        type: "string"
+      - name: "deploymentId"
+        in: "path"
+        description: "ID of deployment"
         required: true
-        type: string
-      - name: body
-        in: body
-        description: Session
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Session"
         required: true
         schema:
-          $ref: '#/definitions/Session'
+          $ref: "#/definitions/Session"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/Session'
+            $ref: "#/definitions/Session"
+      security:
+      - Bearer: []
   /bots/{botId}/deployments/{deploymentId}/sessions/{sessionId}:
     get:
-      security: 
-        - Bearer: []
       tags:
-      - session
-      summary: Find session by ID
+      - "session"
+      summary: "Find session by ID"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
         required: true
-        type: string
-      - name: deploymentId
-        in: path
-        description: ID of deployment to update
+        type: "string"
+      - name: "deploymentId"
+        in: "path"
+        description: "ID of deployment to update"
         required: true
-        type: string
-      - name: sessionId
-        in: path
-        description: ID of session to return
+        type: "string"
+      - name: "sessionId"
+        in: "path"
+        description: "ID of session to return"
         required: true
-        type: string
-      - name: mode
-        in: query
-        description: get mode
+        type: "string"
+      - name: "mode"
+        in: "query"
+        description: "get mode"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/Session'
+            $ref: "#/definitions/Session"
+      security:
+      - Bearer: []
     put:
-      security: 
-        - Bearer: []
       tags:
-      - session
-      summary: Update session by ID
+      - "session"
+      summary: "Update session by ID"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
         required: true
-        type: string
-      - name: deploymentId
-        in: path
-        description: ID of deployment to update
+        type: "string"
+      - name: "deploymentId"
+        in: "path"
+        description: "ID of deployment to update"
         required: true
-        type: string
-      - name: sessionId
-        in: path
-        description: ID of session to update
+        type: "string"
+      - name: "sessionId"
+        in: "path"
+        description: "ID of session to update"
         required: true
-        type: string
-      - name: body
-        in: body
-        description: Session
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Session"
         required: true
         schema:
-          $ref: '#/definitions/Session'
+          $ref: "#/definitions/Session"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: object
+            type: "object"
+            properties: {}
+      security:
+      - Bearer: []
     delete:
-      security: 
-        - Bearer: []
       tags:
-      - session
-      summary: Delete session by ID
+      - "session"
+      summary: "Delete session by ID"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
         required: true
-        type: string
-      - name: deploymentId
-        in: path
-        description: ID of deployment to update
+        type: "string"
+      - name: "deploymentId"
+        in: "path"
+        description: "ID of deployment to update"
         required: true
-        type: string
-      - name: sessionId
-        in: path
-        description: ID of session to delete
+        type: "string"
+      - name: "sessionId"
+        in: "path"
+        description: "ID of session to delete"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/Session'
+            $ref: "#/definitions/Session"
+      security:
+      - Bearer: []
   /bots/{botId}/deployments/{deploymentId}/channels:
-    post:
-      security: 
-        - Bearer: []
+    get:
       tags:
-      - channel
-      summary: Create a channel
+      - "channel"
+      summary: "Get all channels"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - in: body
-        name: body
-        description: Channel object
+      - name: "limit"
+        in: "query"
+        description: "Limit returned channels in a page"
+        required: false
+        type: "integer"
+      - name: "page"
+        in: "query"
+        description: "A number representing page"
+        required: false
+        type: "integer"
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
+        required: true
+        type: "string"
+      - name: "deploymentId"
+        in: "path"
+        description: "ID of deployment to update"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/inline_response_200_2"
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - "channel"
+      summary: "Create a channel"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Channel object"
         required: true
         schema:
-          $ref: '#/definitions/Channel'
-      - name: botId
-        in: path
-        description: ID of bot
+          $ref: "#/definitions/Channel"
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
         required: true
-        type: string
-      - name: deploymentId
-        in: path
-        description: ID of deployment
+        type: "string"
+      - name: "deploymentId"
+        in: "path"
+        description: "ID of deployment"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: Successful operation
+          description: "Successful operation"
           schema:
-            $ref: '#/definitions/Channel'
-    get:
-      security: 
-        - Bearer: []
-      tags:
-      - channel
-      summary: Get all channels
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: limit
-        in: query
-        description: Limit returned channels in a page
-        type: integer
-      - name: page
-        in: query
-        description: A number representing page
-        type: integer
-      - name: botId
-        in: path
-        description: ID of bot
-        required: true
-        type: string
-      - name: deploymentId
-        in: path
-        description: ID of deployment to update
-        required: true
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            type: object
-            properties:
-              page:
-                type: integer
-              limit:
-                type: integer
-              count:
-                type: integer
-              total:
-                type: integer
-              items:
-                type: array
-                items:
-                  $ref: '#/definitions/Channel'
+            $ref: "#/definitions/Channel"
+      security:
+      - Bearer: []
   /bots/{botId}/deployments/{deploymentId}/channels/{channelId}:
     get:
-      security: 
-        - Bearer: []
       tags:
-      - channel
-      summary: Find channel by ID
+      - "channel"
+      summary: "Find channel by ID"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
         required: true
-        type: string
-      - name: deploymentId
-        in: path
-        description: ID of deployment to update
+        type: "string"
+      - name: "deploymentId"
+        in: "path"
+        description: "ID of deployment to update"
         required: true
-        type: string
-      - name: channelId
-        in: path
-        description: ID of channel
+        type: "string"
+      - name: "channelId"
+        in: "path"
+        description: "ID of channel"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/Channel'
+            $ref: "#/definitions/Channel"
+      security:
+      - Bearer: []
     put:
-      security: 
-        - Bearer: []
       tags:
-      - channel
-      summary: Update channel by ID
+      - "channel"
+      summary: "Update channel by ID"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
         required: true
-        type: string
-      - name: deploymentId
-        in: path
-        description: ID of deployment to update
+        type: "string"
+      - name: "deploymentId"
+        in: "path"
+        description: "ID of deployment to update"
         required: true
-        type: string
-      - name: channelId
-        in: path
-        description: ID of channel to update
+        type: "string"
+      - name: "channelId"
+        in: "path"
+        description: "ID of channel to update"
         required: true
-        type: string
-      - in: body
-        name: body
-        description: Channel object
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Channel object"
         required: true
         schema:
-          $ref: '#/definitions/Channel'
+          $ref: "#/definitions/Channel"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/Channel'
+            $ref: "#/definitions/Channel"
+      security:
+      - Bearer: []
     delete:
-      security: 
-        - Bearer: []
       tags:
-      - channel
-      summary: Delete channel by ID
+      - "channel"
+      summary: "Delete channel by ID"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
         required: true
-        type: string
-      - name: deploymentId
-        in: path
-        description: ID of deployment to update
+        type: "string"
+      - name: "deploymentId"
+        in: "path"
+        description: "ID of deployment to update"
         required: true
-        type: string
-      - name: channelId
-        in: path
-        description: ID of channel to delete
+        type: "string"
+      - name: "channelId"
+        in: "path"
+        description: "ID of channel to delete"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/Channel'
-  
+            $ref: "#/definitions/Channel"
+      security:
+      - Bearer: []
   /bots/{botId}/deployments/{deploymentId}/schedules:
-    post:
-      security: 
-        - Bearer: []
+    get:
       tags:
-      - schedule
-      summary: Create a schedule
+      - "schedule"
+      summary: "Get all schedules"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - in: body
-        name: body
-        description: Schedule object
+      - name: "limit"
+        in: "query"
+        description: "Limit returned schedules in a page"
+        required: false
+        type: "integer"
+      - name: "page"
+        in: "query"
+        description: "A number representing page"
+        required: false
+        type: "integer"
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
+        required: true
+        type: "string"
+      - name: "deploymentId"
+        in: "path"
+        description: "ID of deployment to update"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/inline_response_200_3"
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - "schedule"
+      summary: "Create a schedule"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Schedule object"
         required: true
         schema:
-          $ref: '#/definitions/Schedule'
-      - name: botId
-        in: path
-        description: ID of bot
+          $ref: "#/definitions/Schedule"
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
         required: true
-        type: string
-      - name: deploymentId
-        in: path
-        description: ID of deployment
+        type: "string"
+      - name: "deploymentId"
+        in: "path"
+        description: "ID of deployment"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: Successful operation
+          description: "Successful operation"
           schema:
-            $ref: '#/definitions/Schedule'
-    get:
-      security: 
-        - Bearer: []
-      tags:
-      - schedule
-      summary: Get all schedules
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: limit
-        in: query
-        description: Limit returned schedules in a page
-        type: integer
-      - name: page
-        in: query
-        description: A number representing page
-        type: integer
-      - name: botId
-        in: path
-        description: ID of bot
-        required: true
-        type: string
-      - name: deploymentId
-        in: path
-        description: ID of deployment to update
-        required: true
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            type: object
-            properties:
-              page:
-                type: integer
-              limit:
-                type: integer
-              count:
-                type: integer
-              total:
-                type: integer
-              items:
-                type: array
-                items:
-                  $ref: '#/definitions/Schedule'
+            $ref: "#/definitions/Schedule"
+      security:
+      - Bearer: []
   /bots/{botId}/deployments/{deploymentId}/schedules/{scheduleId}:
     get:
-      security: 
-        - Bearer: []
       tags:
-      - schedule
-      summary: Find schedule by ID
+      - "schedule"
+      summary: "Find schedule by ID"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
         required: true
-        type: string
-      - name: deploymentId
-        in: path
-        description: ID of deployment to update
+        type: "string"
+      - name: "deploymentId"
+        in: "path"
+        description: "ID of deployment to update"
         required: true
-        type: string
-      - name: scheduleId
-        in: path
-        description: ID of schedule
+        type: "string"
+      - name: "scheduleId"
+        in: "path"
+        description: "ID of schedule"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/Schedule'
+            $ref: "#/definitions/Schedule"
+      security:
+      - Bearer: []
     delete:
-      security: 
-        - Bearer: []
       tags:
-      - schedule
-      summary: Delete schedule by ID
+      - "schedule"
+      summary: "Delete schedule by ID"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: botId
-        in: path
-        description: ID of bot
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
         required: true
-        type: string
-      - name: deploymentId
-        in: path
-        description: ID of deployment to update
+        type: "string"
+      - name: "deploymentId"
+        in: "path"
+        description: "ID of deployment to update"
         required: true
-        type: string
-      - name: scheduleId
-        in: path
-        description: ID of schedule to delete
+        type: "string"
+      - name: "scheduleId"
+        in: "path"
+        description: "ID of schedule to delete"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/Schedule'
-  
+            $ref: "#/definitions/Schedule"
+      security:
+      - Bearer: []
   /users:
-    post:
-      security: 
-        - Bearer: []
+    get:
       tags:
-      - user
-      summary: Create a user
+      - "user"
+      summary: "Get all users"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - in: body
-        name: body
-        description: User object
+      - name: "limit"
+        in: "query"
+        description: "Limit returned users in a page"
+        required: false
+        type: "integer"
+      - name: "page"
+        in: "query"
+        description: "A number representing page"
+        required: false
+        type: "integer"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/inline_response_200_4"
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - "user"
+      summary: "Create a user"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "User object"
         required: true
         schema:
-          $ref: '#/definitions/User'
+          $ref: "#/definitions/User"
       responses:
         200:
-          description: Successful operation
+          description: "Successful operation"
           schema:
-            type: object
-            allOf: 
-            - $ref: '#/definitions/User'
-            - properties:
-                teams:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      teamId:
-                        type: string
-                      roleId:
-                        type: string
-    get:
-      security: 
-        - Bearer: []
-      tags:
-      - user
-      summary: Get all users
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: limit
-        in: query
-        description: Limit returned users in a page
-        type: integer
-      - name: page
-        in: query
-        description: A number representing page
-        type: integer
-      responses:
-        200:
-          description: successful operation
-          schema:
-            type: object
-            properties:
-              page:
-                type: integer
-              limit:
-                type: integer
-              count:
-                type: integer
-              total:
-                type: integer
-              items:
-                type: array
-                items:
-                  $ref: '#/definitions/User'
+            type: "object"
+            properties: {}
+      security:
+      - Bearer: []
   /users/{userId}:
     get:
-      security: 
-        - Bearer: []
       tags:
-      - user
-      summary: Find user by ID
+      - "user"
+      summary: "Find user by ID"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: userId
-        in: path
-        description: ID of user to return
+      - name: "userId"
+        in: "path"
+        description: "ID of user to return"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: object
-            allOf: 
-            - $ref: '#/definitions/User'
-            - properties:
-                teams:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      teamId:
-                        type: string
-                      roleId:
-                        type: string
+            type: "object"
+            properties: {}
+      security:
+      - Bearer: []
     put:
-      security: 
-        - Bearer: []
       tags:
-      - user
-      summary: Update user by ID
+      - "user"
+      summary: "Update user by ID"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: userId
-        in: path
-        description: ID of user to update
+      - name: "userId"
+        in: "path"
+        description: "ID of user to update"
         required: true
-        type: string
-      - in: body
-        name: body
-        description: User object
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "User object"
         required: true
         schema:
-          $ref: '#/definitions/User'
+          $ref: "#/definitions/User"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: object
-            allOf: 
-            - $ref: '#/definitions/User'
-            - properties:
-                teams:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      teamId:
-                        type: string
-                      roleId:
-                        type: string
+            type: "object"
+            properties: {}
+      security:
+      - Bearer: []
     delete:
-      security: 
-        - Bearer: []
       tags:
-      - user
-      summary: Delete user by ID
+      - "user"
+      summary: "Delete user by ID"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: userId
-        in: path
-        description: ID of user to delete
+      - name: "userId"
+        in: "path"
+        description: "ID of user to delete"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: boolean
+            type: "boolean"
+      security:
+      - Bearer: []
   /users/{userId}/teams:
     get:
-      security: 
-        - Bearer: []
       tags:
-      - user
-      summary: Find user's teams
+      - "user"
+      summary: "Find user's teams"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: userId
-        in: path
-        description: ID of user
+      - name: "userId"
+        in: "path"
+        description: "ID of user"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: array
+            type: "array"
             items:
-              type: string
+              type: "string"
+      security:
+      - Bearer: []
   /users/{userId}/tokens:
     get:
-      security: 
-        - Bearer: []
       tags:
-      - user
-      summary: Find user's tokens
+      - "user"
+      summary: "Find user's tokens"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: userId
-        in: path
-        description: ID of user
+      - name: "userId"
+        in: "path"
+        description: "ID of user"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: array
+            type: "array"
             items:
-              type: object
-              $ref: '#/definitions/Token'
+              $ref: "#/definitions/Token"
+      security:
+      - Bearer: []
   /teams:
     post:
-      security: 
-        - Bearer: []
       tags:
-      - team
-      summary: Create a team
+      - "team"
+      summary: "Create a team"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - in: body
-        name: body
-        description: Team object
+      - in: "body"
+        name: "body"
+        description: "Team object"
         required: true
         schema:
-          $ref: '#/definitions/Team'
+          $ref: "#/definitions/Team"
       responses:
         200:
-          description: Successful operation
+          description: "Successful operation"
           schema:
-            type: object
-            properties:
-              team:
-                $ref: '#/definitions/Team'
-              members:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    userId:
-                      type: string
-                    role:
-                      type: string
-                      enum:
-                      - admin
-                      - member
+            $ref: "#/definitions/inline_response_200_5"
+      security:
+      - Bearer: []
   /teams/{teamId}/users:
     get:
-      security: 
-        - Bearer: []
       tags:
-      - team
-      summary: Find users in a team
+      - "team"
+      summary: "Find users in a team"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: teamId
-        in: path
-        description: ID of team to return
+      - name: "teamId"
+        in: "path"
+        description: "ID of team to return"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: object
-            properties:
-              team:
-                $ref: '#/definitions/Team'
-              members:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    userId:
-                      type: string
-                    role:
-                      type: string
-                      enum:
-                      - admin
-                      - member
-                      
+            $ref: "#/definitions/inline_response_200_5"
+      security:
+      - Bearer: []
   /teams/{teamId}/users/{userId}:
     post:
-      security: 
-        - Bearer: []
       tags:
-      - team
-      summary: Add user to team
+      - "team"
+      summary: "Add user to team"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: teamId
-        in: path
-        description: Team ID
+      - name: "teamId"
+        in: "path"
+        description: "Team ID"
         required: true
-        type: string
-      - name: userId
-        in: path
-        description: User ID
+        type: "string"
+      - name: "userId"
+        in: "path"
+        description: "User ID"
         required: true
-        type: string
-      - name: body
-        in: body
-        description: User object
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "User object"
         required: true
         schema:
-          type: object
-          properties:
-            roleId: 
-              type: string
-              enum:
-                - teamAdmin
-                - teamMember
+          $ref: "#/definitions/body"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: object
-            properties:
-              team:
-                $ref: '#/definitions/Team'
-              members:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    userId:
-                      type: string
-                    role:
-                      type: string
-                      enum:
-                      - admin
-                      - member
+            $ref: "#/definitions/inline_response_200_5"
+      security:
+      - Bearer: []
     delete:
-      security: 
-        - Bearer: []
       tags:
-      - team
-      summary: Delete user from team
+      - "team"
+      summary: "Delete user from team"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: teamId
-        in: path
-        description: Team ID
+      - name: "teamId"
+        in: "path"
+        description: "Team ID"
         required: true
-        type: string
-      - name: userId
-        in: path
-        description: User ID
+        type: "string"
+      - name: "userId"
+        in: "path"
+        description: "User ID"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: object
-            properties:
-              team:
-                $ref: '#/definitions/Team'
-              members:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    userId:
-                      type: string
-                    role:
-                      type: string
-                      enum:
-                      - admin
-                      - member
+            $ref: "#/definitions/inline_response_200_5"
+      security:
+      - Bearer: []
   /nlus:
-    post:
-      security: 
-        - Bearer: []
+    get:
       tags:
-      - nlu
-      summary: Create nlu
+      - "nlu"
+      summary: "Get all nlus"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - in: body
-        name: body
-        description: Nlu object
+      - name: "limit"
+        in: "query"
+        description: "Limit returned bots in a page"
+        required: false
+        type: "integer"
+      - name: "page"
+        in: "query"
+        description: "A number representing page"
+        required: false
+        type: "integer"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PagedGeistNlu"
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - "nlu"
+      summary: "Create nlu"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Nlu object"
         required: true
         schema:
-          $ref: '#/definitions/GeistNlu'
+          $ref: "#/definitions/GeistNlu"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: object
-            properties:
-              name:
-                type: string
-              lang:
-                type: string
-              visibility:
-                type: string
-                enum:
-                  - private
-                  - public
-    get:
-      security: 
-        - Bearer: []
-      tags:
-      - nlu
-      summary: Get all nlus
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: limit
-        in: query
-        description: Limit returned bots in a page
-        type: integer
-      - name: page
-        in: query
-        description: A number representing page
-        type: integer
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/PagedGeistNlu'
+            $ref: "#/definitions/inline_response_200_6"
+      security:
+      - Bearer: []
   /nlus/{nluName}:
     get:
-      security: 
-        - Bearer: []
       tags:
-      - nlu
-      summary: Find NLU by name
+      - "nlu"
+      summary: "Find NLU by name"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: nluName
-        in: path
-        description: Name of nlu to return
+      - name: "nluName"
+        in: "path"
+        description: "Name of nlu to return"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: object
-            properties:
-              name:
-                type: string
-              lang:
-                type: string
-              visibility:
-                type: string
-                enum:
-                  - private
-                  - public
-    put:
+            $ref: "#/definitions/inline_response_200_6"
       security:
-        - Bearer: []
+      - Bearer: []
+    put:
       tags:
-      - nlu
-      summary: Update nlu by name
+      - "nlu"
+      summary: "Update nlu by name"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: nluName
-        in: path
-        description: Name of nlu to update
+      - name: "nluName"
+        in: "path"
+        description: "Name of nlu to update"
         required: true
-        type: string
-      - name: body
-        in: body
-        description: Nlu
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Nlu"
         required: true
         schema:
-            type: object
-            properties:
-              name:
-                type: string
-              lang:
-                type: string
-              visibility:
-                type: string
-                enum:
-                  - private
-                  - public
+          $ref: "#/definitions/body_1"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: object
-            properties:
-              name:
-                type: string
-              lang:
-                type: string
-              visibility:
-                type: string
-                enum:
-                  - private
-                  - public
+            $ref: "#/definitions/inline_response_200_6"
+      security:
+      - Bearer: []
     delete:
-      security: 
-        - Bearer: []
       tags:
-      - nlu
-      summary: Delete Nlu by Name
+      - "nlu"
+      summary: "Delete Nlu by Name"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: nluName
-        in: path
-        description: Name of nlu to delete
+      - name: "nluName"
+        in: "path"
+        description: "Name of nlu to delete"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: boolean
+            type: "boolean"
+      security:
+      - Bearer: []
   /nlus/{nluName}/snapshot:
     get:
-      security: 
-        - Bearer: []
       tags:
-      - nlu
-      summary: Snapshot NLU
+      - "nlu"
+      summary: "Snapshot NLU"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: nluName
-        in: path
-        description: Name of nlu
+      - name: "nluName"
+        in: "path"
+        description: "Name of nlu"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: string
+            type: "string"
+      security:
+      - Bearer: []
   /nlus/profiles:
     get:
-      security: 
-        - Bearer: []
       tags:
-      - nlu
-      summary: Get list profile NLU
+      - "nlu"
+      summary: "Get list profile NLU"
       produces:
-      - application/json
+      - "application/json"
+      parameters: []
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: object
+            type: "object"
+            properties: {}
+      security:
+      - Bearer: []
   /nlus/public:
     get:
-      security: 
-        - Bearer: []
       tags:
-      - nlu
-      summary: Get list public NLU
+      - "nlu"
+      summary: "Get list public NLU"
       produces:
-      - application/json
+      - "application/json"
+      parameters: []
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: array
-            items: 
-              type: string
-                
+            type: "array"
+            items:
+              type: "string"
+      security:
+      - Bearer: []
   /nlus/{nluName}/train:
     post:
-      security: 
-        - Bearer: []
       tags:
-      - nlu
-      summary: Train NLU
+      - "nlu"
+      summary: "Train NLU"
       consumes:
-      - multipart/form-data
+      - "multipart/form-data"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: nluName
-        in: path
-        description: Name of nlu
+      - name: "nluName"
+        in: "path"
+        description: "Name of nlu"
         required: true
-        type: string
-      - in: formData
-        name: sentence
-        type: string
-        description: NLU training data
-      - in: formData
-        name: file
-        type: file
-        items:
-          type: string
+        type: "string"
+      - name: "sentence"
+        in: "formData"
+        description: "NLU training data"
+        required: false
+        type: "string"
+      - name: "file"
+        in: "formData"
         description: "NLU training data. Accepted formats: JSON/YAML/TXT"
+        required: false
+        type: "file"
+        items:
+          type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: object
-            properties:
-              count:
-                type: number
-              status:
-                type: string
-
+            $ref: "#/definitions/inline_response_200_7"
+      security:
+      - Bearer: []
   /nlus/{nluName}/training_data:
     get:
-      security: 
-        - Bearer: []
-      tags: 
-      - analytic
-      summary: Get analytic data
+      tags:
+      - "analytic"
+      summary: "Get analytic data"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: nluName
-        in: path
-        description: Bot ID
+      - name: "nluName"
+        in: "path"
+        description: "Bot ID"
         required: true
-        type: string
-      - name: args
-        in: query
-        description: Additional arguments such as channelId, startTimestamp, endTimestamp, etc
-        type: string
+        type: "string"
+      - name: "args"
+        in: "query"
+        description: "Additional arguments such as channelId, startTimestamp, endTimestamp,\
+          \ etc"
+        required: false
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: array
+            type: "array"
             items:
-              type: object
-
+              type: "object"
+              properties: {}
+      security:
+      - Bearer: []
   /nlus/{nluName}/predict:
     post:
-      security: 
-        - Bearer: []
       tags:
-      - nlu
-      summary: Train NLU
+      - "nlu"
+      summary: "Train NLU"
       consumes:
-      - multipart/form-data
+      - "multipart/form-data"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: nluName
-        in: path
-        description: Name of nlu
+      - name: "nluName"
+        in: "path"
+        description: "Name of nlu"
         required: true
-        type: string
-      - in: formData
-        name: sentence
-        type: string
-        description: Data to predict
-      - in: formData
-        name: file
-        type: file
+        type: "string"
+      - name: "sentence"
+        in: "formData"
+        description: "Data to predict"
+        required: false
+        type: "string"
+      - name: "file"
+        in: "formData"
+        description: "Data to predict"
+        required: false
+        type: "file"
         items:
-          type: string
-        description: Data to predict
+          type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: object
-            properties:
-              result:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    entityName:
-                      type: object
-                      properties:
-                        value:
-                          type: string
-                        score:
-                          type: number
-                        start:
-                          type: number
-                        end:
-                          type: number
-
+            $ref: "#/definitions/inline_response_200_8"
+      security:
+      - Bearer: []
   /nlus/{nluName}/debug:
     post:
-      security: 
-        - Bearer: []
       tags:
-      - nlu
-      summary: Train NLU
+      - "nlu"
+      summary: "Train NLU"
       consumes:
-      - multipart/form-data
+      - "multipart/form-data"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: nluName
-        in: path
-        description: Name of nlu
+      - name: "nluName"
+        in: "path"
+        description: "Name of nlu"
         required: true
-        type: string
-      - in: formData
-        name: sentence
-        type: string
+        type: "string"
+      - name: "sentence"
+        in: "formData"
+        description: "Data to predict"
+        required: false
+        type: "string"
         items:
-          type: string
-        description: Data to predict
+          type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: object
-            properties:
-              result:
-                type: object
-
+            $ref: "#/definitions/inline_response_200_9"
+      security:
+      - Bearer: []
   /nlus/{nluName}/entities:
-    post:
-      security: 
-        - Bearer: []
+    get:
       tags:
-      - nlu
-      summary: Create entity
+      - "nlu"
+      summary: "Get list Entity of nlu"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: nluName
-        in: path
-        description: Name of nlu
+      - name: "nluName"
+        in: "path"
+        description: "Name of nlu"
         required: true
-        type: string
-      - in: body
-        name: body
-        description: Entity object
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "object"
+            properties: {}
+      security:
+      - Bearer: []
+    post:
+      tags:
+      - "nlu"
+      summary: "Create entity"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "nluName"
+        in: "path"
+        description: "Name of nlu"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Entity object"
         required: true
         schema:
-          $ref: '#/definitions/GeistEntity'
+          $ref: "#/definitions/GeistEntity"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/GeistEntity'
-    get:
-      security: 
-        - Bearer: []
-      tags:
-      - nlu
-      summary: Get list Entity of nlu
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: nluName
-        in: path
-        description: Name of nlu
-        required: true
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            type: object
-            items:
-              $ref: '#/definitions/GeistEntity'
+            $ref: "#/definitions/GeistEntity"
+      security:
+      - Bearer: []
   /nlus/{nluName}/entities/{entityName}:
     get:
-      security: 
-        - Bearer: []
       tags:
-      - nlu
-      summary: Get Entity of nlu
+      - "nlu"
+      summary: "Get Entity of nlu"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: nluName
-        in: path
-        description: Name of nlu
+      - name: "nluName"
+        in: "path"
+        description: "Name of nlu"
         required: true
-        type: string
+        type: "string"
+      - name: "entityName"
+        in: "path"
+        description: "Name of entityName"
+        required: true
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/GeistEntity'
+            $ref: "#/definitions/GeistEntity"
+      security:
+      - Bearer: []
     put:
-      security: 
-          - Bearer: []
       tags:
-      - nlu
-      summary: Update entity by name
+      - "nlu"
+      summary: "Update entity by name"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: nluName
-        in: path
-        description: Name of nlu
+      - name: "nluName"
+        in: "path"
+        description: "Name of nlu"
         required: true
-        type: string
-      - name: entityName
-        in: path
-        description: Name of entity
+        type: "string"
+      - name: "entityName"
+        in: "path"
+        description: "Name of entity"
         required: true
-        type: string
-      - name: body
-        in: body
-        description: Nlu
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Nlu"
         required: true
         schema:
-          $ref: '#/definitions/GeistEntity'
+          $ref: "#/definitions/GeistEntity"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/GeistEntity'
+            $ref: "#/definitions/GeistEntity"
+      security:
+      - Bearer: []
     delete:
-      security: 
-          - Bearer: []
       tags:
-      - nlu
-      summary: Delete entity by name
+      - "nlu"
+      summary: "Delete entity by name"
       consumes:
-      - application/json
+      - "application/json"
       produces:
-      - application/json
+      - "application/json"
       parameters:
-      - name: nluName
-        in: path
-        description: Name of nlu
+      - name: "nluName"
+        in: "path"
+        description: "Name of nlu"
         required: true
-        type: string
-      - name: entityName
-        in: path
-        description: Name of entity
+        type: "string"
+      - name: "entityName"
+        in: "path"
+        description: "Name of entity"
         required: true
-        type: string
+        type: "string"
       responses:
         200:
-          description: successful operation
+          description: "successful operation"
           schema:
-            type: boolean
-          
-              
-        
+            type: "boolean"
+      security:
+      - Bearer: []
+securityDefinitions:
+  Bearer:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
 definitions:
   Bot:
-    type: object
+    type: "object"
     required:
-    - id
-    - name
+    - "id"
+    - "name"
     properties:
       id:
-        type: string
+        type: "string"
       name:
-        type: string
-        example: kata-bot
+        type: "string"
+        example: "kata-bot"
       version:
-        type: string
+        type: "string"
       desc:
-        type: string
+        type: "string"
       lang:
-        type: string
+        type: "string"
       timezone:
-        type: integer
+        type: "integer"
       flows:
-        type: object
+        type: "object"
+        properties: {}
       nlus:
-        type: object
+        type: "object"
+        properties: {}
       methods:
-        type: object
+        type: "object"
+        properties: {}
       config:
-        type: object
+        type: "object"
+        properties: {}
+    example:
+      flows: "{}"
+      timezone: 5
+      methods: "{}"
+      name: "kata-bot"
+      id: "id"
+      lang: "lang"
+      version: "version"
+      config: "{}"
+      desc: "desc"
+      nlus: "{}"
   Flow:
-    type: object
+    type: "object"
     properties:
       fallback:
-        type: boolean
+        type: "boolean"
       priority:
-        type: integer
+        type: "integer"
       expire:
-        type: integer
+        type: "integer"
       volatile:
-        type: boolean
+        type: "boolean"
       intents:
-        type: object
-        properties:
-          name:
-            $ref: '#/definitions/Intent'
+        $ref: "#/definitions/Flow_intents"
       states:
-        type: object
-        properties:
-          name:
-            $ref: '#/definitions/State'
+        $ref: "#/definitions/Flow_states"
       stateMapper:
-        type: string
+        type: "string"
       stateActions:
-        type: object
-        properties:
-          name:
-            $ref: '#/definitions/StateAction'
+        $ref: "#/definitions/Flow_stateActions"
       actions:
-        type: object
-        properties:
-          name:
-            $ref: '#/definitions/Action'
+        $ref: "#/definitions/Flow_actions"
       methods:
-        type: object
-        properties:
-          name:
-            $ref: '#/definitions/Method'
+        $ref: "#/definitions/Flow_methods"
       nlus:
-        type: object
-        properties:
-          name:
-            $ref: '#/definitions/Nlu'
+        $ref: "#/definitions/Flow_nlus"
   Intent:
-    type: object
+    type: "object"
     properties:
       condition:
-        type: string
+        type: "string"
       type:
-        type: string
+        type: "string"
         enum:
-        - data
-        - text
-        - command
+        - "data"
+        - "text"
+        - "command"
       classifier:
-        $ref: '#/definitions/IntentClassifier'
+        $ref: "#/definitions/IntentClassifier"
       initial:
-        type: boolean
+        type: "boolean"
       priority:
-        type: integer
+        type: "integer"
       fallback:
-        type: boolean
+        type: "boolean"
       attributes:
-        type: object
-        properties:
-          name:
-            $ref: '#/definitions/IntentAttribute'
+        $ref: "#/definitions/Intent_attributes"
   IntentClassifier:
-    type: object
+    type: "object"
     properties:
       nlu:
-        type: string
+        type: "string"
       hint:
-        type: string
+        type: "string"
       match:
-        type: string
+        type: "string"
       process:
-        type: string
+        type: "string"
       options:
-        type: object
+        type: "object"
+        properties: {}
   IntentAttribute:
-    type: object
+    type: "object"
     properties:
       nlu:
-        type: string
+        type: "string"
       hint:
-        type: string
+        type: "string"
       path:
-        type: string
+        type: "string"
       process:
-        type: string
+        type: "string"
       options:
-        type: object
+        type: "object"
+        properties: {}
   State:
-    type: object
+    type: "object"
     properties:
       initial:
-        type: boolean
+        type: "boolean"
       float:
-        $ref: '#/definitions/StateTransition'
+        $ref: "#/definitions/StateTransition"
       action:
-        $ref: '#/definitions/StateAction'
+        $ref: "#/definitions/StateAction"
       enter:
-        type: string
+        type: "string"
       transit:
-        type: string
+        type: "string"
       exit:
-        type: string
+        type: "string"
       end:
-        type: boolean
+        type: "boolean"
       transitions:
-        type: object
-        properties:
-          name:
-            $ref: '#/definitions/StateTransition'
+        $ref: "#/definitions/State_transitions"
   StateTransition:
-    type: object
+    type: "object"
     properties:
       condition:
-        type: string
+        type: "string"
       fallback:
-        type: boolean
+        type: "boolean"
       priority:
-        type: integer
+        type: "integer"
       mapping:
-        type: string
+        type: "string"
   StateAction:
-    type: object
+    type: "object"
     properties:
       name:
-        type: string
+        type: "string"
       method:
-        type: string
+        type: "string"
       condition:
-        type: string
+        type: "string"
       options:
-        type: object
+        type: "object"
+        properties: {}
   StateMapResult:
-    type: object
+    type: "object"
     properties:
       state:
-        type: string
+        type: "string"
       data:
-        type: object
+        type: "object"
+        properties: {}
       context:
-        type: object
+        type: "object"
+        properties: {}
       end:
-        type: boolean
+        type: "boolean"
   FlowProcessResult:
-    type: object
     allOf:
-      - $ref: '#/definitions/StateMapResult'
-      - properties:
-          intent:
-            type: string
-          attributes:
-            type: object
-          responses:
-            type: array
-            items:
-              $ref: '#/definitions/ResponseMessage'
+    - $ref: "#/definitions/StateMapResult"
+    - properties:
+        intent:
+          type: "string"
+        attributes:
+          type: "object"
+          properties: {}
+        responses:
+          type: "array"
+          items:
+            $ref: "#/definitions/ResponseMessage"
   Action:
-    type: object
+    type: "object"
     properties:
       name:
-        type: string
+        type: "string"
       method:
-        type: string
+        type: "string"
       condition:
-        type: string
+        type: "string"
       options:
-        type: object
+        type: "object"
+        properties: {}
   Nlu:
-    type: object
+    type: "object"
     properties:
       type:
-        type: string
+        type: "string"
       process:
-        type: string
+        type: "string"
       method:
-        type: string
+        type: "string"
       options:
-        type: object
+        type: "object"
+        properties: {}
   Method:
-    type: object
+    type: "object"
     properties:
       code:
-        type: string
+        type: "string"
       entry:
-        type: string
+        type: "string"
   Message:
-    type: object
+    type: "object"
     properties:
       type:
-        type: string
+        type: "string"
         enum:
-        - text
-        - data
-        - command
+        - "text"
+        - "data"
+        - "command"
       content:
-        type: string
+        type: "string"
       payload:
-        type: object
+        type: "object"
+        properties: {}
       id:
-        type: string
+        type: "string"
+    example:
+      payload: "{}"
+      id: "id"
+      type: "text"
+      content: "content"
   ProcessedMessage:
-    type: object
     allOf:
-      - $ref: '#/definitions/Message'
-      - properties:
-          intent:
-            type: string
-          attributes:
-            type: object
+    - $ref: "#/definitions/Message"
+    - properties:
+        intent:
+          type: "string"
+        attributes:
+          type: "object"
+          properties: {}
   ResponseMessage:
-    type: object
+    type: "object"
     properties:
       id:
-        type: string
+        type: "string"
       type:
-        type: string
+        type: "string"
         enum:
-        - text
-        - data
-        - result
-        - command
+        - "text"
+        - "data"
+        - "result"
+        - "command"
       action:
-        type: string
+        type: "string"
       content:
-        type: string
+        type: "string"
       payload:
-        type: object
+        type: "object"
+        properties: {}
   Response:
-    type: object
     allOf:
-      - $ref: '#/definitions/ResponseMessage'
-      - properties:
-          refId:
-            type: string
-          flow:
-            type: string
+    - $ref: "#/definitions/ResponseMessage"
+    - properties:
+        refId:
+          type: "string"
+        flow:
+          type: "string"
   Session:
-    type: object
+    type: "object"
     properties:
       id:
-        type: string
+        type: "string"
       channelId:
-        type: string
+        type: "string"
       deploymentId:
-        type: string
+        type: "string"
       dataKey:
-        type: string
+        type: "string"
       states:
-        type: string
+        type: "string"
       contexes:
-        type: string
+        type: "string"
       history:
-        type: array
+        type: "array"
         items:
-          type: object
-          properties:
-            flow:
-              type: string
-            timestamp:
-              type: number
+          $ref: "#/definitions/Session_history"
       current:
-        type: string
+        type: "string"
       timestamp:
-        type: number
+        type: "number"
       meta:
-        type: object
+        type: "object"
+        properties: {}
       data:
-        type: object
+        type: "object"
+        properties: {}
+    example:
+      dataKey: "dataKey"
+      current: "current"
+      data: "{}"
+      meta: "{}"
+      deploymentId: "deploymentId"
+      id: "id"
+      history:
+      - flow: "flow"
+        timestamp: 0.80082819046101150206595775671303272247314453125
+      - flow: "flow"
+        timestamp: 0.80082819046101150206595775671303272247314453125
+      contexes: "contexes"
+      channelId: "channelId"
+      states: "states"
+      timestamp: 6.02745618307040320615897144307382404804229736328125
   Channel:
-    type: object
+    type: "object"
     properties:
       id:
-        type: string
+        type: "string"
       name:
-        type: string
+        type: "string"
       type:
-        type: string
+        type: "string"
         enum:
-        - generic
-        - line
-        - fbmessenger
+        - "generic"
+        - "line"
+        - "fbmessenger"
       options:
-        type: object
+        type: "object"
+        properties: {}
       url:
-        type: string
+        type: "string"
       webhook:
-        type: string
+        type: "string"
+    example:
+      webhook: "webhook"
+      name: "name"
+      options: "{}"
+      id: "id"
+      type: "generic"
+      url: "url"
   Deployment:
-    type: object
+    type: "object"
     properties:
       id:
-        type: string
+        type: "string"
       dashboard:
-        type: boolean
+        type: "boolean"
       name:
-        type: string
+        type: "string"
       botId:
-        type: string
+        type: "string"
       botVersion:
-        type: string
+        type: "string"
       channels:
-        type: object
+        type: "object"
+        properties: {}
+    example:
+      channels: "{}"
+      name: "name"
+      id: "id"
+      botId: "botId"
+      dashboard: true
+      botVersion: "botVersion"
   Conversation:
-    type: object
+    type: "object"
     properties:
       sessionId:
-        type: string
+        type: "string"
       message:
-        type: object
+        type: "object"
+        properties: {}
       dataKey:
-        type: string
+        type: "string"
+    example:
+      dataKey: "dataKey"
+      sessionId: "sessionId"
+      message: "{}"
   User:
-    type: object
+    type: "object"
     properties:
       id:
-        type: string
+        type: "string"
       username:
-        type: string
+        type: "string"
       email:
-        type: string
+        type: "string"
       profile:
-        type: object
+        type: "object"
+        properties: {}
+    example:
+      profile: "{}"
+      id: "id"
+      email: "email"
+      username: "username"
   Team:
-    type: object
+    type: "object"
     properties:
       username:
-        type: string
+        type: "string"
       password:
-        type: string
+        type: "string"
       roleId:
-        type: string
+        type: "string"
         enum:
-          - teamAdmin
-          - teamMember
+        - "teamAdmin"
+        - "teamMember"
+    example:
+      password: "password"
+      roleId: "teamAdmin"
+      username: "username"
   Subscription:
-    type: object
+    type: "object"
     properties:
       id:
-        type: string
+        type: "string"
       deploymentId:
-        type: string
+        type: "string"
       name:
-        type: string
+        type: "string"
       quota:
-        type: string
+        type: "string"
       price:
-        type: string
+        type: "string"
       penaltyPrice:
-        type: string
+        type: "string"
       currency:
-        type: string
+        type: "string"
         enum:
-        - usd
-        - idr
+        - "usd"
+        - "idr"
       startDate:
-        type: number
+        type: "number"
       endDate:
-        type: number
+        type: "number"
       allowExceed:
-        type: boolean
+        type: "boolean"
       exceedCap:
-        type: number
+        type: "number"
       period:
-        type: string
+        type: "string"
         enum:
-        - month
-        - year
+        - "month"
+        - "year"
   ExecIntent:
-    type: object
+    type: "object"
     properties:
       flow:
-        type: string
+        type: "string"
       intent:
-        type: string
+        type: "string"
       message:
-        $ref: '#/definitions/Message'
+        $ref: "#/definitions/Message"
       context:
-        type: object
+        type: "object"
+        properties: {}
       data:
-        type: object
+        type: "object"
+        properties: {}
   ExecStateMapper:
-    type: object
+    type: "object"
     properties:
       flow:
-        type: string
+        type: "string"
       state:
-        type: string
+        type: "string"
       message:
-        $ref: '#/definitions/ProcessedMessage'
+        $ref: "#/definitions/ProcessedMessage"
       context:
-        type: object
+        type: "object"
+        properties: {}
       data:
-        type: object
+        type: "object"
+        properties: {}
   ExecActions:
-    type: object
+    type: "object"
     properties:
       flow:
-        type: string
+        type: "string"
       state:
-        type: string
+        type: "string"
       message:
-        $ref: '#/definitions/ProcessedMessage'
+        $ref: "#/definitions/ProcessedMessage"
       context:
-        type: object
+        type: "object"
+        properties: {}
       data:
-        type: object
+        type: "object"
+        properties: {}
   ExecFlow:
-    type: object
+    type: "object"
     properties:
       flow:
-        type: string
+        type: "string"
       state:
-        type: string
+        type: "string"
       message:
-        $ref: '#/definitions/Message'
+        $ref: "#/definitions/Message"
       context:
-        type: object
+        type: "object"
+        properties: {}
       data:
-        type: object
+        type: "object"
+        properties: {}
       intent:
-        type: string
+        type: "string"
   Login:
-    type: object
+    type: "object"
     properties:
       username:
-        type: string
+        type: "string"
       password:
-        type: string
+        type: "string"
+    example:
+      password: "password"
+      username: "username"
   Token:
-    type: object
+    type: "object"
     properties:
       id:
-        type: string
+        type: "string"
       type:
-        type: string
+        type: "string"
       label:
-        type: string
+        type: "string"
       userId:
-        type: string
+        type: "string"
       teamId:
-        type: string
+        type: "string"
       botId:
-        type: string
+        type: "string"
       roleId:
-        type: string
+        type: "string"
       expire:
-        type: number
+        type: "number"
+    example:
+      roleId: "roleId"
+      teamId: "teamId"
+      expire: 0.80082819046101150206595775671303272247314453125
+      id: "id"
+      label: "label"
+      botId: "botId"
+      type: "type"
+      userId: "userId"
   PagedBot:
-    type: object
+    type: "object"
     properties:
       page:
-        type: integer
+        type: "integer"
       limit:
-        type: integer
+        type: "integer"
       count:
-        type: integer
+        type: "integer"
       total:
-        type: integer
+        type: "integer"
       items:
-        type: array
+        type: "array"
         items:
-          $ref: '#/definitions/Bot'
+          $ref: "#/definitions/Bot"
+    example:
+      total: 5
+      limit: 6
+      count: 1
+      page: 0
+      items:
+      - flows: "{}"
+        timezone: 5
+        methods: "{}"
+        name: "kata-bot"
+        id: "id"
+        lang: "lang"
+        version: "version"
+        config: "{}"
+        desc: "desc"
+        nlus: "{}"
+      - flows: "{}"
+        timezone: 5
+        methods: "{}"
+        name: "kata-bot"
+        id: "id"
+        lang: "lang"
+        version: "version"
+        config: "{}"
+        desc: "desc"
+        nlus: "{}"
   PagedGeistNlu:
-    type: object
+    type: "object"
     properties:
       page:
-        type: integer
+        type: "integer"
       limit:
-        type: integer
+        type: "integer"
       total:
-        type: integer
+        type: "integer"
       items:
-        type: array
+        type: "array"
         items:
-          type: object
-          properties:
-            name:
-              type: string
-            lang:
-              type: string
-            visibility:
-              type: string
-              enum:
-                - private
-                - public
+          $ref: "#/definitions/inline_response_200_6"
+    example:
+      total: 1
+      limit: 6
+      page: 0
+      items:
+      - visibility: "private"
+        name: "name"
+        lang: "lang"
+      - visibility: "private"
+        name: "name"
+        lang: "lang"
   Schedule:
-    type: object
+    type: "object"
     properties:
       id:
-        type: string
+        type: "string"
       name:
-        type: string
+        type: "string"
       message:
-        $ref: '#/definitions/Message'
+        $ref: "#/definitions/Message"
       start:
-        type: string
+        type: "string"
       end:
-        type: string
+        type: "string"
       freqType:
-        type: string
+        type: "string"
       freqInterval:
-        type: number
+        type: "number"
       targets:
-        type: array
+        type: "array"
         items:
-          type: object
-          properties:
-            channelId:
-              type: string
-            users:
-              type: array
-              items:
-                type: string
+          $ref: "#/definitions/Schedule_targets"
       vouchers:
-        type: array
+        type: "array"
         items:
-          type: string
+          type: "string"
+    example:
+      freqInterval: 5.63737665663332876420099637471139430999755859375
+      name: "name"
+      start: "start"
+      end: "end"
+      freqType: "freqType"
+      id: "id"
+      message:
+        payload: "{}"
+        id: "id"
+        type: "text"
+        content: "content"
+      vouchers:
+      - "vouchers"
+      - "vouchers"
+      targets:
+      - channelId: "channelId"
+        users:
+        - "users"
+        - "users"
+      - channelId: "channelId"
+        users:
+        - "users"
+        - "users"
   GeistNlu:
-    type: object
-    properties:
-      name: 
-        type: string
-      lang: 
-        type: string
-      visibility:
-        type: string
-      entity:
-        $ref: '#/definitions/GeistEntity'
-  GeistEntity:
-    type: object
+    type: "object"
     properties:
       name:
-        type: string
+        type: "string"
+      lang:
+        type: "string"
+      visibility:
+        type: "string"
+      entity:
+        $ref: "#/definitions/GeistEntity"
+    example:
+      visibility: "visibility"
+      name: "name"
+      lang: "lang"
+      entity:
+        resolver: "resolver"
+        dictionary: "{}"
+        profile: "profile"
+        root: "root"
+        relModel: "{}"
+        name: "name"
+        relProfile: "relProfile"
+        model: "{}"
+        label: "label"
+        type: "dict"
+        belongsTo: "belongsTo"
+  GeistEntity:
+    type: "object"
+    properties:
+      name:
+        type: "string"
       type:
-        type: string
+        type: "string"
         enum:
-          - dict
-          - phrase
-          - trait
+        - "dict"
+        - "phrase"
+        - "trait"
       profile:
-        type: string
+        type: "string"
       root:
-        type: string
-      label: 
-        type: string
+        type: "string"
+      label:
+        type: "string"
       relProfile:
-        type: string
+        type: "string"
       belongsTo:
-        type: string
+        type: "string"
       model:
-        type: object
+        type: "object"
+        properties: {}
       relModel:
-        type: object
+        type: "object"
+        properties: {}
       resolver:
-        type: string
+        type: "string"
       dictionary:
-        type: object
-        
-# Added by API Auto Mocking Plugin
-host: virtserver.swaggerhub.com
-basePath: /kata.ai/zaun/1.0.0
-schemes:
- - https
+        type: "object"
+        properties: {}
+    example:
+      resolver: "resolver"
+      dictionary: "{}"
+      profile: "profile"
+      root: "root"
+      relModel: "{}"
+      name: "name"
+      relProfile: "relProfile"
+      model: "{}"
+      label: "label"
+      type: "dict"
+      belongsTo: "belongsTo"
+  inline_response_200:
+    properties:
+      versions:
+        type: "array"
+        items:
+          type: "string"
+      latest:
+        type: "string"
+    example:
+      versions:
+      - "versions"
+      - "versions"
+      latest: "latest"
+  inline_response_200_1:
+    properties:
+      page:
+        type: "integer"
+      limit:
+        type: "integer"
+      count:
+        type: "integer"
+      total:
+        type: "integer"
+      items:
+        type: "array"
+        items:
+          $ref: "#/definitions/Deployment"
+    example:
+      total: 5
+      limit: 6
+      count: 1
+      page: 0
+      items:
+      - channels: "{}"
+        name: "name"
+        id: "id"
+        botId: "botId"
+        dashboard: true
+        botVersion: "botVersion"
+      - channels: "{}"
+        name: "name"
+        id: "id"
+        botId: "botId"
+        dashboard: true
+        botVersion: "botVersion"
+  inline_response_200_2:
+    properties:
+      page:
+        type: "integer"
+      limit:
+        type: "integer"
+      count:
+        type: "integer"
+      total:
+        type: "integer"
+      items:
+        type: "array"
+        items:
+          $ref: "#/definitions/Channel"
+    example:
+      total: 5
+      limit: 6
+      count: 1
+      page: 0
+      items:
+      - webhook: "webhook"
+        name: "name"
+        options: "{}"
+        id: "id"
+        type: "generic"
+        url: "url"
+      - webhook: "webhook"
+        name: "name"
+        options: "{}"
+        id: "id"
+        type: "generic"
+        url: "url"
+  inline_response_200_3:
+    properties:
+      page:
+        type: "integer"
+      limit:
+        type: "integer"
+      count:
+        type: "integer"
+      total:
+        type: "integer"
+      items:
+        type: "array"
+        items:
+          $ref: "#/definitions/Schedule"
+    example:
+      total: 5
+      limit: 6
+      count: 1
+      page: 0
+      items:
+      - freqInterval: 5.63737665663332876420099637471139430999755859375
+        name: "name"
+        start: "start"
+        end: "end"
+        freqType: "freqType"
+        id: "id"
+        message:
+          payload: "{}"
+          id: "id"
+          type: "text"
+          content: "content"
+        vouchers:
+        - "vouchers"
+        - "vouchers"
+        targets:
+        - channelId: "channelId"
+          users:
+          - "users"
+          - "users"
+        - channelId: "channelId"
+          users:
+          - "users"
+          - "users"
+      - freqInterval: 5.63737665663332876420099637471139430999755859375
+        name: "name"
+        start: "start"
+        end: "end"
+        freqType: "freqType"
+        id: "id"
+        message:
+          payload: "{}"
+          id: "id"
+          type: "text"
+          content: "content"
+        vouchers:
+        - "vouchers"
+        - "vouchers"
+        targets:
+        - channelId: "channelId"
+          users:
+          - "users"
+          - "users"
+        - channelId: "channelId"
+          users:
+          - "users"
+          - "users"
+  inline_response_200_4:
+    properties:
+      page:
+        type: "integer"
+      limit:
+        type: "integer"
+      count:
+        type: "integer"
+      total:
+        type: "integer"
+      items:
+        type: "array"
+        items:
+          $ref: "#/definitions/User"
+    example:
+      total: 5
+      limit: 6
+      count: 1
+      page: 0
+      items:
+      - profile: "{}"
+        id: "id"
+        email: "email"
+        username: "username"
+      - profile: "{}"
+        id: "id"
+        email: "email"
+        username: "username"
+  inline_response_200_5_members:
+    properties:
+      userId:
+        type: "string"
+      role:
+        type: "string"
+        enum:
+        - "admin"
+        - "member"
+    example:
+      role: "admin"
+      userId: "userId"
+  inline_response_200_5:
+    properties:
+      team:
+        $ref: "#/definitions/Team"
+      members:
+        type: "array"
+        items:
+          $ref: "#/definitions/inline_response_200_5_members"
+    example:
+      members:
+      - role: "admin"
+        userId: "userId"
+      - role: "admin"
+        userId: "userId"
+      team:
+        password: "password"
+        roleId: "teamAdmin"
+        username: "username"
+  body:
+    type: "object"
+    properties:
+      roleId:
+        type: "string"
+        enum:
+        - "teamAdmin"
+        - "teamMember"
+  inline_response_200_6:
+    properties:
+      name:
+        type: "string"
+      lang:
+        type: "string"
+      visibility:
+        type: "string"
+        enum:
+        - "private"
+        - "public"
+    example:
+      visibility: "private"
+      name: "name"
+      lang: "lang"
+  body_1:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      lang:
+        type: "string"
+      visibility:
+        type: "string"
+        enum:
+        - "private"
+        - "public"
+  inline_response_200_7:
+    properties:
+      count:
+        type: "number"
+      status:
+        type: "string"
+    example:
+      count: 0.80082819046101150206595775671303272247314453125
+      status: "status"
+  inline_response_200_8_entityName:
+    properties:
+      value:
+        type: "string"
+      score:
+        type: "number"
+      start:
+        type: "number"
+      end:
+        type: "number"
+    example:
+      score: 0.80082819046101150206595775671303272247314453125
+      start: 6.02745618307040320615897144307382404804229736328125
+      end: 1.46581298050294517310021547018550336360931396484375
+      value: "value"
+  inline_response_200_8_result:
+    properties:
+      entityName:
+        $ref: "#/definitions/inline_response_200_8_entityName"
+    example:
+      entityName:
+        score: 0.80082819046101150206595775671303272247314453125
+        start: 6.02745618307040320615897144307382404804229736328125
+        end: 1.46581298050294517310021547018550336360931396484375
+        value: "value"
+  inline_response_200_8:
+    properties:
+      result:
+        type: "array"
+        items:
+          $ref: "#/definitions/inline_response_200_8_result"
+    example:
+      result:
+      - entityName:
+          score: 0.80082819046101150206595775671303272247314453125
+          start: 6.02745618307040320615897144307382404804229736328125
+          end: 1.46581298050294517310021547018550336360931396484375
+          value: "value"
+      - entityName:
+          score: 0.80082819046101150206595775671303272247314453125
+          start: 6.02745618307040320615897144307382404804229736328125
+          end: 1.46581298050294517310021547018550336360931396484375
+          value: "value"
+  inline_response_200_9:
+    properties:
+      result:
+        type: "object"
+        properties: {}
+    example:
+      result: "{}"
+  Flow_intents:
+    properties:
+      name:
+        $ref: "#/definitions/Intent"
+  Flow_states:
+    properties:
+      name:
+        $ref: "#/definitions/State"
+  Flow_stateActions:
+    properties:
+      name:
+        $ref: "#/definitions/StateAction"
+  Flow_actions:
+    properties:
+      name:
+        $ref: "#/definitions/Action"
+  Flow_methods:
+    properties:
+      name:
+        $ref: "#/definitions/Method"
+  Flow_nlus:
+    properties:
+      name:
+        $ref: "#/definitions/Nlu"
+  Intent_attributes:
+    properties:
+      name:
+        $ref: "#/definitions/IntentAttribute"
+  State_transitions:
+    properties:
+      name:
+        $ref: "#/definitions/StateTransition"
+  Session_history:
+    properties:
+      flow:
+        type: "string"
+      timestamp:
+        type: "number"
+    example:
+      flow: "flow"
+      timestamp: 0.80082819046101150206595775671303272247314453125
+  Schedule_targets:
+    properties:
+      channelId:
+        type: "string"
+      users:
+        type: "array"
+        items:
+          type: "string"
+    example:
+      channelId: "channelId"
+      users:
+      - "users"
+      - "users"
