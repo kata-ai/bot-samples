@@ -11,6 +11,7 @@ paths:
   /bots/{botId}/converse:
     post:
       summary: "Converse"
+      description: "Send a message to bot and retrieve response"
       consumes:
       - "application/json"
       produces:
@@ -18,7 +19,7 @@ paths:
       parameters:
       - name: "botId"
         in: "path"
-        description: "ID of bot"
+        description: "Kata bot id configured when initializing bot"
         required: true
         type: "string"
       - in: "body"
@@ -44,18 +45,22 @@ definitions:
   Conversation:
     type: "object"
     properties:
-      sessionId:
-        type: "string"
       message:
         type: "object"
         properties:
           content:
             type: "string"
+            description: "Content to send for the bot"
+            example: "halo"
           type:
             type: "string"
+            description: "Type of content that can be text or button"
+            example: "text"
             enum:
               - text
               - button
+      sessionId:
+        type: "string"
       dataKey:
         type: "string"
     example:
