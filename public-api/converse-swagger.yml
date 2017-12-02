@@ -4,7 +4,7 @@ info:
   version: "1.0.1"
   title: "Conversation"
 host: "zaun.katalabs.io"
-basePath: ""
+basePath: "/"
 schemes:
 - "https"
 paths:
@@ -51,10 +51,8 @@ definitions:
         properties:
           content:
             type: "string"
-            required: true
           type:
             type: "string"
-            required: true
             enum:
               - text
               - button
