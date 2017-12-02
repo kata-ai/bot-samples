@@ -1,0 +1,57 @@
+swagger: "2.0"
+info:
+  description: "Conversation API"
+  version: "1.0.1"
+  title: "Conversation"
+host: "zaun.katalabs.io"
+basePath: "/"
+schemes:
+- "https"
+paths:
+  /bots/{botId}/converse:
+    post:
+      summary: "Converse"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "botId"
+        in: "path"
+        description: "ID of bot"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Conversation object"
+        required: true
+        schema:
+          $ref: "#/definitions/Conversation"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "object"
+            properties: {}
+      security:
+      - Bearer: []
+securityDefinitions:
+  Bearer:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+definitions:
+  Conversation:
+    type: "object"
+    properties:
+      sessionId:
+        type: "string"
+      message:
+        type: "object"
+        properties: {}
+      dataKey:
+        type: "string"
+    example:
+      dataKey: "dataKey"
+      sessionId: "sessionId"
+      message: "{}"
