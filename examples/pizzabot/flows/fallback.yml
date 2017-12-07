@@ -1,0 +1,21 @@
+# bot will get to this flow when no intents are recognized
+fallback: true
+intents:
+  fallbackIntent:
+    fallback: true
+
+states:
+  init:
+    initial: true
+    transitions:
+      init:
+        fallback: true
+    action:
+      name: fallbackAction
+    end: true
+
+actions:
+  fallbackAction:
+    type: text
+    options:
+      text: "Sorry I don't understand."

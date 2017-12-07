@@ -1,0 +1,39 @@
+
+
+intents:
+    greeting:
+        initial: true
+        type: text
+        classifier:
+            nlu: qisg
+            match: greeting
+        priority: 10
+
+    reenter:
+        type: command
+        condition: content == 'reenter'
+
+states:
+    init:
+        initial: true
+        transit:
+          context.greetCount: "intent == 'greeting' ? (context.greetCount || 0) + 1 : 0"
+        action:
+            - name: greetPerson
+              condition: "!context.greetCount"
+            - name: greetAgain
+              condition: "context.greetCount >= 1"
+        float:
+            fallback: true
+            
+actions:
+    greetAgain:
+        type: text
+        options:
+            text: "Please order something"
+
+    greetPerson:
+        type: text
+        options:
+            text: "Hello, please type 'place order' to start ordering pizza"
+
