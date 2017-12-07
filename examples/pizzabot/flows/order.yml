@@ -1,0 +1,155 @@
+intents:
+  orderCommand:
+    initial: true
+    type: text
+    classifier:
+      nlu: order
+      match: pizzaOrder
+  
+  # This will prevent intent recognized by *fallbackIntent* at *fallback.yml*
+  pizzaChosen:
+    initial: true
+    type: data
+    condition: payload.type == 'pizza'
+
+  reenter:
+    type: command
+    condition: content == "reenter"
+
+  pizzaQuantity: 
+    type: text
+    classifier:
+      nlu: quantity
+    attributes:
+      quantity:
+        nlu: quantity
+
+  yesno:
+    type: data
+    condition: payload.type == 'confirm'
+
+states: 
+  init:
+    initial: true
+    action:
+      - name: sayThanks
+        condition: "context.answer == 'yes'"
+      - name: cancelOrder
+        condition: "context.answer == 'no'"
+    transitions:
+      showPizza:
+        condition: "intent == 'orderCommand'"
+      init:
+        fallback: true
+        
+  showPizza:
+    action:
+      - name: pizzaOptions
+      - name: askOptions
+    transitions:
+      pizzaQuantity:
+        condition: "intent == 'pizzaChosen'"
+        mapping: 
+          context.pizza: "payload.pizza" # remember payload.pizza for the whole session
+      showPizza:
+        fallback: true
+
+  pizzaQuantity:
+    action:
+      - name: askQuantity
+    transitions:
+      confirmPizza:
+        condition: "intent == 'pizzaQuantity'"
+        mapping:
+          context.quantity: "attributes.quantity"
+          context.answer: "null"
+      pizzaQuantity:
+        fallback: true
+
+  confirmPizza:
+    action:
+      - name: yesNoButton
+    transitions:
+      init:
+        fallback: true
+        mapping:
+          context.answer: "payload.confirm"
+    transit:
+        context.answer: "intent" 
+  
+  done:
+    end: true
+    action:
+      - name: sayThanks
+        condition: "context.answer == 'yes'"
+      - name: cancelOrder
+        condition: "context.answer == 'no'"
+
+actions:
+  # Example of hard-coded carousel
+  pizzaOptions:
+    type: "template"
+    options:
+        type: "carousel"
+        items:
+            - text: 'For pepperoni lovers, amazing taste!'
+              title: 'Pepperoni'
+              thumbnailImageUrl: 'https://www.cicis.com/media/1243/pizza_adven_zestypepperoni.png'
+              actions:
+                - type: "postback"
+                  label: 'Pepperoni'
+                  payload:
+                    type: pizza
+                    pizza: pepperoni
+            - text: 'For vegetarians, lovely veggies!'
+              title: 'Veggie Lovers'
+              thumbnailImageUrl: 'https://www.cicis.com/media/1143/pizza_adven_zestyveggie.png'
+              actions:
+                - type: "postback"
+                  label: 'Veggie Lovers'
+                  payload: 
+                    type: pizza
+                    pizza: veggielover
+
+  askOptions:
+    type: text
+    options:
+      text: 'Which one do you want?'
+
+  confirmPizza:
+    type: text
+    options:
+      text: "Is it correct that you order $(context.quantity) items of $(context.pizza)?"
+
+  askQuantity:
+    type: text
+    options:
+      text: 'How many do you want? (Min.1 Max.9)'
+      
+  cancelOrder:
+    type: text
+    options:
+      text: "No problem, please order again next time"
+
+  sayThanks:
+    type: text
+    options:
+      text: "Thank you for your order :)"
+
+  yesNoButton:
+    type: template
+    options:
+      type: button
+      items:
+        text: "Is it correct your order is $(context.quantity) items of $(context.pizza)?"
+        actions:
+          - type: postback
+            label: Yes
+            payload:
+              type: confirm
+              confirm: "yes"
+          - type: postback
+            label: No
+            payload:
+              type: confirm
+              confirm: "no"

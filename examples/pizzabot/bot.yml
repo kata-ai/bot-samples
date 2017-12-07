@@ -1,0 +1,11 @@
+schema: kata.ai/schema/kata-ml/1.0
+name: pizzabot
+desc: Pizza Bot
+id: pizzabot-1
+version: 0.0.1
+nlus: $include(./nlu.yml)
+flows:
+    welcome: $include(./flows/welcome.yml)
+    fallback: $include(./flows/fallback.yml)
+    order: $include(./flows/order.yml)
+tag: latest

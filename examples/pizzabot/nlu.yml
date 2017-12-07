@@ -1,0 +1,36 @@
+# model for entity recognition (example: person name, places, etc)
+ner:
+    type: verstandTagger
+    options:
+        model: dcaca5ae-be7f-42f2-a6a1-2b250d4336fd
+
+# model for question, instruction, statement & greeting (qisg)        
+qisg:
+    type: verstandClassifier
+    options:
+        model: cb58d784-9e87-40d5-bae1-6077b934c061    
+
+# nlu for YES or NO statement
+yesno:
+    type: verstandClassifier
+    options:
+        model: b7df76e5-b95d-4925-9f86-2796ea85403a
+
+# nlu to order pizza based on keywords
+order:
+    type: keyword
+    options:
+        keywords:
+            pizzaOrder:
+                - order
+                - I want to order
+                - place order
+                - order pizza
+                - pizza please
+                - pizza
+                - I want pizza
+
+quantity:
+    type: regex
+    options:
+        regex: "[1-9]"
