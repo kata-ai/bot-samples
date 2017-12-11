@@ -1,0 +1,43 @@
+# This sticker flow example is specific for usage with Line channel
+# integration. Stickers used with Line app can be found in their
+# official documentation: https://devdocs.line.me/files/sticker_list.pdf
+intents:
+  hello:
+    initial: true
+    type: text
+    classifier:
+      nlu: greeting
+      match: hello
+
+states:
+  init:
+    initial: true
+    transitions:
+      showSticker:
+        condition: "intent == 'hello'"
+      init:
+        fallback: true
+  
+  showSticker:
+    end: true
+    action:
+      - name: showStickerThumbs
+      - name: showStickerFlower
+    
+actions:
+  showStickerThumbs:
+    type: template
+    options:
+      type: sticker
+      items:
+        stickerId: '13'
+        packageId: '1'
+  
+  showStickerFlower:
+    type: template
+    options:
+      type: sticker
+      items:
+        stickerId: '5'
+        packageId: '1'
+ 

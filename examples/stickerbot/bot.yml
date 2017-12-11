@@ -1,0 +1,17 @@
+schema: kata.ai/schema/kata-ml/1.0
+name: stickerbot
+desc: Sticker Bot
+id: stickerbot-1
+version: 0.0.1
+flows:
+    sticker: $include(./flows/sticker.yml)
+nlus:
+    # Keyword to trigger stickers
+    greeting:
+        type: keyword
+        options:
+            keywords:
+                hello:
+                    - halo
+                    - hi
+tag: latest
