@@ -31,11 +31,6 @@ intents:
 states: 
   init:
     initial: true
-    action:
-      - name: sayThanks
-        condition: "context.answer == 'yes'"
-      - name: cancelOrder
-        condition: "context.answer == 'no'"
     transitions:
       showPizza:
         condition: "intent == 'orderCommand'"
@@ -70,7 +65,7 @@ states:
     action:
       - name: yesNoButton
     transitions:
-      init:
+      done:
         fallback: true
         mapping:
           context.answer: "payload.confirm"
@@ -82,8 +77,12 @@ states:
     action:
       - name: sayThanks
         condition: "context.answer == 'yes'"
+      - name: sayThanksSticker
+        condition: "context.answer == 'yes'"
       - name: cancelOrder
-        condition: "context.answer == 'no'"
+        condition: "context.answer == 'no'"        
+      - name: saveData
+        condition: "context.answer == 'yes'"
 
 actions:
   # Example of hard-coded carousel
@@ -153,3 +152,16 @@ actions:
             payload:
               type: confirm
               confirm: "no"
+  
+  sayThanksSticker:
+    type: template
+    options:
+        type: sticker
+        items:
+          stickerId: '13'
+          packageId: '1'
+  
+  saveData:
+    type: command
+    options:
+      command: saveData

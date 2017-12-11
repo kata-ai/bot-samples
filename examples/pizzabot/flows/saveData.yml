@@ -1,0 +1,22 @@
+# pay attention on the condition "content == 'saveData'"
+intents:
+  saveData:
+    initial: true
+    type: command
+    condition: "content == 'saveData'"
+
+states:
+  toDelivery:
+    initial: true
+    end: true
+    action:
+      name: testActions
+    transitions:
+      toDelivery:
+        fallback: true 
+
+actions:
+  testActions:
+    type: text
+    options:
+      text: "Data have been saved into database"
