@@ -36,4 +36,3 @@ actions:
         type: text
         options:
             text: "Hello, please type 'place order' to start ordering pizza"
-
