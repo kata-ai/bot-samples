@@ -1,0 +1,16 @@
+schema: kata.ai/schema/kata-ml/1.0
+name: cardbot
+desc: Card Bot
+id: cardbot-1
+version: 0.0.1
+flows:
+    card: $include(./flows/card.yml)
+nlus:
+    food:
+        type: keyword
+        options:
+            keywords:
+                menu:
+                    - saya lapar
+                    - pesan makan
+tag: latest
