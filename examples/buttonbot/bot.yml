@@ -1,0 +1,15 @@
+schema: kata.ai/schema/kata-ml/1.0
+name: buttonbot
+desc: Button Bot
+id: buttonbot-1
+version: 0.0.1
+flows:
+    card: $include(./flows/button.yml)
+nlus:
+    game:
+        type: keyword
+        options:
+            keywords:
+                trivia:
+                    - main
+tag: latest

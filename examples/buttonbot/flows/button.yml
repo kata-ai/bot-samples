@@ -1,0 +1,48 @@
+# This flow shows example on how to use button with multiple
+# fields to get input from user. Each field is associated with
+# label and payload.
+intents:
+  trivia:
+    initial: true
+    type: text
+    classifier:
+      nlu: game
+      match: trivia
+
+states:
+  init:
+    initial: true
+    transitions:
+      showTrivia:
+        condition: "intent == 'trivia'"
+      init:
+        fallback: true
+  
+  showTrivia:
+    end: true
+    action:
+      - name: triviaQuestion
+    
+actions:
+  triviaQuestion:
+    type: template
+    options:
+      type: button
+      items:
+        text: "Siapa nama presiden Indonesia sekarang?"
+        actions:
+          - type: postback
+            label: "Jokowi"
+            payload:
+              type: president
+              president: jokowi
+          - type: postback
+            label: "Ahok"
+            payload:
+              type: president
+              president: ahok
+          - type: postback
+            label: "Ridwan Kamil"
+            payload:
+              type: president
+              president: ridwankamil
