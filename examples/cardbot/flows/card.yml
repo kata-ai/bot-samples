@@ -9,6 +9,13 @@ intents:
     classifier:
       nlu: food
       match: menu
+  
+  # Intent must be defined for card payload as well
+  # otherwise state will get messed up
+  food:
+    initial: true
+    type: data
+    condition: payload.type == 'menu'
 
 states:
   init:
@@ -20,9 +27,18 @@ states:
         fallback: true
   
   showCard:
-    end: true
     action:
       - name: menuOptions
+    transitions:
+      answer:
+        fallback: true
+        mapping:
+          context.menu: 'payload.menu'
+  
+  answer:
+    end: true
+    action:
+      - name: answer
     
 actions:
   menuOptions:
@@ -57,3 +73,13 @@ actions:
                   payload: 
                     type: menu
                     menu: sotoayam
+
+  askOptions:
+    type: text
+    options:
+      text: 'Mau yang mana?'
+
+  answer:
+    type: text
+    options:
+      text: 'Kamu pesan makanan $(context.menu)'

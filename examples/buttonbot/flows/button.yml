@@ -9,19 +9,60 @@ intents:
       nlu: game
       match: trivia
 
+  # Intent must be defined for button payload as well
+  # otherwise state will get messed up. In this case 1 field (jokowi)
+  # is recognized as correctAnswer intent, and 2 fields (ahok and ridwankamil)
+  # is recognized as wrongAnswer intent. You can make general intent too
+  # by defining single 'payload.type' intent.
+  correctAnswer:
+    initial: true
+    type: data
+    condition: payload.type == 'president' && payload.president == 'jokowi'
+
+  wrongAnswer:
+    initial: true
+    type: data
+    condition: payload.president == 'ahok' || payload.president == 'ridwankamil'
+
+  # Reenter is needed in wrongAnswer state, in order to move
+  # to next state without user input. Reenter simulates "user input"
+  # that enables bot to move on by itself.
+  reenter:
+    type: command
+    condition: content == "reenter"
+
 states:
   init:
     initial: true
     transitions:
       showTrivia:
         condition: "intent == 'trivia'"
-      init:
-        fallback: true
   
   showTrivia:
-    end: true
     action:
       - name: triviaQuestion
+    transitions:
+      correctAnswer:
+        condition: "intent == 'correctAnswer'"
+        mapping:
+          context.president: payload.president
+      wrongAnswer:
+        fallback: true
+        mapping:
+          context.president: payload.president
+  
+  correctAnswer:
+    end: true
+    action:
+      - name: correctAnswer 
+
+  wrongAnswer:
+    action:
+      - name: wrongAnswer
+      - name: reenter
+    transitions:
+      showTrivia:
+        fallback: true
     
 actions:
   triviaQuestion:
@@ -46,3 +87,13 @@ actions:
             payload:
               type: president
               president: ridwankamil
+
+  correctAnswer:
+    type: text
+    options:
+      text: 'Ya benar, presiden kita $(context.president)'
+  
+  wrongAnswer:
+    type: text
+    options:
+      text: 'Presiden kita bukan $(context.president)'
