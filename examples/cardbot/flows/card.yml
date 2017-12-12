@@ -1,0 +1,59 @@
+# This flow shows example on how to use multiple cards embedded
+# with button that user can use as input. A card contains picture
+# thumbnail, title, description, and a button payload for user to
+# click on.
+intents:
+  menu:
+    initial: true
+    type: text
+    classifier:
+      nlu: food
+      match: menu
+
+states:
+  init:
+    initial: true
+    transitions:
+      showCard:
+        condition: 'intent == 'menu'
+      init:
+        fallback: true
+  
+  showCard:
+    end: true
+    action:
+      - name: menuOptions
+    
+actions:
+  menuOptions:
+    type: 'template'
+    options:
+        type: 'carousel'
+        items:
+            - text: 'Nasi padang favorit dilengkapi rendang, singkong, dan ayam pop'
+              title: 'Nasi Padang'
+              thumbnailImageUrl: '<image-url>'
+              actions:
+                - type: 'postback'
+                  label: 'Nasi Padang'
+                  payload:
+                    type: menu
+                    menu: nasipadang
+            - text: 'Nasi goreng gurih dimasak dengan ikan cakalang dan kerupuku udang'
+              title: 'Nasi Goreng'
+              thumbnailImageUrl: '<image-url>'
+              actions:
+                - type: 'postback'
+                  label: 'Nasi Goreng'
+                  payload: 
+                    type: menu
+                    menu: nasigoreng
+            - text: 'Nasi soto ayam berkuah hangat, cocok untuk dimakan saat hujan'
+              title: 'Soto Ayam'
+              thumbnailImageUrl: '<image-url>'
+              actions:
+                - type: 'postback'
+                  label: 'Soto Ayam'
+                  payload: 
+                    type: menu
+                    menu: sotoayam
