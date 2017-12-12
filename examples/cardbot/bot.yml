@@ -6,7 +6,6 @@ version: 0.0.1
 flows:
     card: $include(./flows/card.yml)
 nlus:
-    # Keyword to trigger cards
     food:
         type: keyword
         options:
@@ -14,3 +13,4 @@ nlus:
                 menu:
                     - saya lapar
                     - pesan makan
+tag: latest
