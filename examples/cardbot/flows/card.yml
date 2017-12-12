@@ -32,7 +32,7 @@ actions:
         items:
             - text: 'Nasi padang favorit dilengkapi rendang, singkong, dan ayam pop'
               title: 'Nasi Padang'
-              thumbnailImageUrl: 'https://github.com/kata-ai/bot-samples/raw/giri/cardbot/examples/cardbot/img/nasi-padang.jpg'
+              thumbnailImageUrl: 'https://github.com/kata-ai/bot-samples/raw/master/examples/cardbot/img/nasi-padang.jpg'
               actions:
                 - type: 'postback'
                   label: 'Nasi Padang'
@@ -41,7 +41,7 @@ actions:
                     menu: nasipadang
             - text: 'Nasi goreng gurih dimasak dengan ikan cakalang dan kerupuku udang'
               title: 'Nasi Goreng'
-              thumbnailImageUrl: 'https://github.com/kata-ai/bot-samples/raw/giri/cardbot/examples/cardbot/img/nasi-goreng.jpg'
+              thumbnailImageUrl: 'https://github.com/kata-ai/bot-samples/raw/master/examples/cardbot/img/nasi-goreng.jpg'
               actions:
                 - type: 'postback'
                   label: 'Nasi Goreng'
@@ -50,7 +50,7 @@ actions:
                     menu: nasigoreng
             - text: 'Nasi soto ayam berkuah hangat, cocok untuk dimakan saat hujan'
               title: 'Soto Ayam'
-              thumbnailImageUrl: 'https://github.com/kata-ai/bot-samples/raw/giri/cardbot/examples/cardbot/img/soto-ayam.jpg'
+              thumbnailImageUrl: 'https://github.com/kata-ai/bot-samples/raw/master/examples/cardbot/img/soto-ayam.jpg'
               actions:
                 - type: 'postback'
                   label: 'Soto Ayam'
