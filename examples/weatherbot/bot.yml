@@ -1,0 +1,23 @@
+schema: kata.ai/schema/kata-ml/1.0
+name: weatherbot
+desc: Weather Bot
+id: weatherbot-1
+version: 0.0.1
+flows:
+    weather: $include(./flows/weather.yml)
+nlus:
+    news:
+        type: keyword
+        options:
+            keywords:
+                weather:
+                    - info cuaca
+    location:
+        type: keyword
+        options:
+            keywords:
+                city:
+                    - bandung
+                    - jakarta
+                    - surabaya
+tag: latest

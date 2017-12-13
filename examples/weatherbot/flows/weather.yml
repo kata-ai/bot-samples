@@ -1,0 +1,56 @@
+intents:
+  weather:
+    initial: true
+    type: text
+    classifier:
+      nlu: news
+      match: weather
+  
+  location:
+    initial: true
+    type: text
+    classifier:
+      nlu: location
+      match: city
+  
+states:
+  init:
+    initial: true
+    transitions:
+      askLocation:
+        condition: 'intent == "weather"'
+      init:
+        fallback: true
+  
+  askLocation:
+    action:
+      - name: askLocation
+    transitions:
+      answer:
+        fallback: true
+        mapping:
+          context.location: content
+
+  answer:
+    end: true
+    action:
+      - name: getWeatherAPI
+      - name: answer
+
+actions:
+  askLocation:
+    type: text
+    options:
+      text: 'Kamu ada di kota apa sekarang?'
+
+  # Open weather API returns temperature in Kelvin
+  getWeatherAPI:
+    type: api
+    options:
+      method: GET
+      uri: 'https://api.openweathermap.org/data/2.5/weather?q=$(context.location)&appid=beb536b6a3f98bb2bfde28ac6d99c6fc'
+
+  answer:
+    type: text
+    options:
+      text: 'Cuaca di $(context.location) sekarang ini $(result.main.temp) kelvin'
